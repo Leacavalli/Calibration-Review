@@ -1,0 +1,135 @@
+---
+title: "Objective 1"
+output: html_document
+date: "2024-05-04"
+Author: Léa Cavalli
+---
+
+# Set up environment
+```{r}
+# Clean environment
+rm( list = ls() )
+
+# load necessary libraries
+library(tidyverse)
+
+# Load data
+setwd("~/GitHub/Calibration-Review")
+raw_data <- read.csv("review_396964_20240504214514.csv")
+```
+
+# Correct country inconsistencies
+```{r}
+# Explore country names 
+raw_data |> 
+  group_by(Study.setting) |>
+  summarise(N=n())|>
+  arrange(-N)
+# install.packages("countries")
+library(countries)
+list_countries <- list_countries(nomenclature = "name_en")
+raw_data |> 
+  filter(! Study.setting %in% list_countries) |> 
+  pull(Study.setting)
+
+
+# Correcting some inconsistencies
+raw_data_V2 <- raw_data |>
+  mutate(Study.setting = ifelse(Study.setting %in% c("United States", "USA"), "United States of America", Study.setting))|>
+  mutate(Study.setting = ifelse(Study.setting %in% c("eSwatini ", "Swaziland"), "Eswatini", Study.setting))|>
+  mutate(Study.setting = ifelse(Study.setting %in% c("UK"), "United Kingdom", Study.setting))|>
+  mutate(Study.setting = ifelse(Study.setting %in% c("Russia"), "Russian Federation", Study.setting))|>
+  mutate(Study.setting = str_replace(Study.setting, ", and ", ", "))|>
+  mutate(Study.setting = str_replace(Study.setting, "and ", ", "))
+# still: # South Korea vs Democratic People's Republic of Korea
+
+unique(raw_data_V2|> 
+  filter(! Study.setting %in% list_countries) |> 
+  pull(Study.setting))
+
+
+# Outliers 
+raw_data_V2|> 
+  filter(Study.setting %in% c("105 LMICs", "Southeast Asia", "sub-Saharan Africa", "Not reported"))
+
+# 3251: Study.setting = "105 LMICs"
+# 1140: Study.setting = "Southeast Asia
+# 1099: Study.setting = "sub-Saharan Africa"
+# 994: Study.setting = "Not reported"
+
+```
+
+
+
+# Investigate outliers 
+```{r}
+# Data cleaning 
+# remove those that have multiple calibration ?
+# size of calibration output: commas, no commas
+# Outliers
+
+raw_data  |> 
+  filter(How.many.parameters.were.calibrated. =="")
+# 351 :  How.many.parameters.were.calibrated. is empty
+
+raw_data  |> 
+  filter(How.many.calibration.targets.were.used.for.estimation. =="Other: Single")
+# 1960 :  How.many.calibration.targets.were.used.for.estimation. is set to "Other: Single"
+
+raw_data  |> 
+  filter(grepl("Other: ", Name.of.calibration.algorithm))
+# 3216 : Other: Method of moments	
+# 894 :  Other: Latin Hypercube Sampling	
+
+raw_data  |> 
+  filter(grepl("Other: ", Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm))
+# 2366: Other: Other	
+# 805: Other: Data likelihood	
+
+raw_data |> 
+    filter(grepl("Other", Nature.of.calibration.results))
+# 845: Multiple calibration
+
+raw_data  |> 
+  filter(External.beliefs.or.evidence =="")
+# 1227: External.beliefs.or.evidence is empty
+
+
+raw_data |> 
+    filter(grepl("Other", External.beliefs.or.evidence))
+# 2293 : Other: No prior knowledge is incorporated for parameters to be calibrated.	
+# 1279 : Other: No prior knowledge is incorporated for parameters to be calibrated.	
+
+
+raw_data  |> 
+  filter(How.are.calibration.results.reported. == "Numerical: e.g. as value(s).; Calibration results are not reported. ")
+# 789: How.are.calibration.results.reported. == "Numerical: e.g. as value(s).; Calibration results are not reported. "
+
+raw_data  |> 
+  filter(How.is.uncertainty.in.calibration.outputs.reported. == "Graphical: As a plot; e.g., a line with shaded areas indicating uncertainty intervals ; Uncertainty in calibration outputs is not reported.")
+# 1524 : How.is.uncertainty.in.calibration.outputs.reported. == "Graphical: As a plot; e.g., a line with shaded areas indicating uncertainty intervals ; Uncertainty in calibration outputs is not reported."
+
+```
+
+
+
+Comments: 
+* Covidence automatically outputs the "Study ID" (i.e. Author name + year), and the Title of the papers 
+* Country names have inconsistencies
+
+Questions for data cleaning
+* what do I do with those that have multiple calibrations ? Do I count each calibration as a separate article ?
+
+Questions for Objective 1
+* For any category where multiple choice selection was possible - what do we do when several options have been selected ? Do it add +1 count to each selected option ?
+* For  D.4. (What is the size of the calibration output?), are you interested in the count + percentage of articles reporting the size of calibration output vs not ?
+* Following  D.4., shall I  remove point estimates from the summary statistic of the range of calibration sizes ? Also, would it make sense to report the ranges of  calibration sizes separately for articles with sample estimate vs distribution estimate outputs ?
+
+
+Questions for Objective 3:
+* Is it normal that model type and stochasticity within "0. General" are not included in the PIPO framework ?
+* Item 1 (A.1 Scientific problem being solved (what is the purpose of calibration?)) in "A. Purpose" category does not have a "Not reported" option. As such, it probably does not make sense to include it in PIPO ?
+* Is it normal that "B.1.4. How many parameters were calibrated?" is not included in the PIPO framework ?
+* For the category "C.4 Goodness-of-fit (GOF) measure employed within calibration algorithm", only the "Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)" and "Data likelihood " options are listed in PIPO. Would you like me to consider all other possible options (i.e. "Not Reported", "not clear" and "Other") as not reported ? Specifically asking because I think the option "Other" could still be considered as Reported.
+* Is it normal that programming language (i.e. C.5) and package name (i.e. C.5) are not included in PIPO ?
+

@@ -1,0 +1,408 @@
+---
+title: "Objective 1 - Summaries"
+output: html_document
+date: "2024-05-08"
+Author: Léa Cavalli
+---
+
+# Set up environment
+```{r}
+# Clean environment
+rm( list = ls() )
+
+# load necessary libraries
+library(tidyverse)
+
+# Load data
+setwd("~/GitHub/Calibration-Review")
+clean_data <- read.csv("review_396964_20240504214514.csv")
+# clean_data <- read.csv("Clean_data_review.csv")
+
+```
+
+
+# 0. General 
+```{r}
+# 0.1 Year published 
+df_0.1 <- clean_data |> 
+  group_by(Year.published) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Year.published")|> 
+  mutate(Field= "0.1 Year published", .before = Options)
+
+
+# 0.2 Disease type 
+df_0.2_V0 <- clean_data |> 
+  group_by(Disease.type..choose.all.that.apply.) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Disease.type..choose.all.that.apply.")|> 
+  mutate(Field= "0.2 Disease type", .before = Options)
+# Recode to account for some articles with several options
+df_0.2_HIV <- df_0.2_V0 |> 
+  filter(grepl("HIV", Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options ="HIV", .before = Count)|> 
+  mutate(Field= "Scientific.problem.being.solved", .before = Options)
+df_0.2_TB <- df_0.2_V0 |> 
+  filter(grepl("TB", Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options ="TB", .before = Count)|> 
+  mutate(Field= "Scientific.problem.being.solved", .before = Options)
+df_0.2_Malaria <- df_0.2_V0 |> 
+  filter(grepl("Malaria", Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options ="Malaria", .before = Count)|> 
+  mutate(Field= "Scientific.problem.being.solved", .before = Options)
+df_0.2 <- rbind(df_0.2_HIV, df_0.2_TB, df_0.2_Malaria)
+
+# 0.3 Model type 
+df_0.3 <- clean_data |> 
+    mutate(Model.type = factor(Model.type, levels= c("Compartmental ", "Individual-based ", "Hawkes Process ", "Not reported", "Other")))|>
+  group_by(Model.type) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Model.type")|> 
+  mutate(Field= "0.3 Model type", .before = Options)
+
+
+# 0.4 Stochasticity in model 
+df_0.4 <- clean_data |> 
+  mutate(Stochasticity.in.model = factor(Stochasticity.in.model, levels= c("Deterministic model ", "Stochastic model ", "Not reported")))|> 
+  group_by(Stochasticity.in.model) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Stochasticity.in.model")|> 
+  mutate(Field= "0.4 Stochasticity in model", .before = Options)
+
+```
+
+# A. Purpose
+```{r}
+# A.1 Scientific problem being solved (what is the purpose of calibration?) 
+df_A.1_V0 <- clean_data |> 
+  group_by(Scientific.problem.being.solved) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Scientific.problem.being.solved")|> 
+  mutate(Field= "A.1 Scientific problem being solved (what is the purpose of calibration?)", .before = Options)
+
+# Recode to account for some articles with several options
+# Understand disease mechanisms
+df_A.1_Disease.mechanisms <- df_A.1_V0 |> 
+  filter(grepl("mechanisms", Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options ="Understand disease mechanisms (e.g., through inference on a parameter) ", .before = Count)|> 
+  mutate(Field= "A.1 Scientific problem being solved (what is the purpose of calibration?)", .before = Options)
+# Evaluate interventions
+df_A.1_Evaluate.interventions <- df_A.1_V0 |> 
+  filter(grepl("Evaluate interventions", Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options ="Evaluate interventions", .before = Count)|> 
+  mutate(Field= "A.1 Scientific problem being solved (what is the purpose of calibration?)", .before = Options)
+# Predict disease trends 
+df_A.1_Predict.trends <- df_A.1_V0 |> 
+  filter(grepl("Predict disease trends", Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options ="Predict disease trends ", .before = Count)|> 
+  mutate(Field= "A.1 Scientific problem being solved (what is the purpose of calibration?)", .before = Options)
+# Evaluate interventions
+df_A.1_Assess.assumptions <- df_A.1_V0 |> 
+  filter(grepl("Assess impact of model assumptions", Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options ="Assess impact of model assumptions", .before = Count)|> 
+  mutate(Field= "A.1 Scientific problem being solved (what is the purpose of calibration?)", .before = Options)
+# Bind rows  
+df_A.1 <- rbind(df_A.1_Disease.mechanisms, 
+                df_A.1_Evaluate.interventions,
+                df_A.1_Predict.trends, 
+                df_A.1_Assess.assumptions)
+
+```
+
+# B. Inputs 
+# B.1. Parameter inputs
+```{r}
+# B.1.1. Beliefs or evidence
+df_B.1.1 <- clean_data |> 
+  mutate(External.beliefs.or.evidence = factor(External.beliefs.or.evidence, levels= c("Prior knowledge is incorporated for at least one parameter to be calibrated; e.g., as a prior distribution over the parameter.", "No prior knowledge is incorporated for parameters to be calibrated. ", "Not reported")))|> 
+  group_by(External.beliefs.or.evidence) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="External.beliefs.or.evidence")|> 
+  mutate(Field= "B.1.1. Beliefs or evidence", .before = Options)
+
+# B.1.2. Choice of parameters to calibrate
+df_B.1.2 <- clean_data |> 
+  mutate(Choice.of.parameters.to.calibrate = factor(Choice.of.parameters.to.calibrate, levels= c("All parameters", "Subset of parameters", "Not reported")))|> 
+  group_by(Choice.of.parameters.to.calibrate) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Choice.of.parameters.to.calibrate")|> 
+  mutate(Field= "B.1.2. Choice of parameters to calibrate", .before = Options)
+
+
+# B.1.3. What justification was provided for choice of parameters to calibrate? Only for studies which calibrated a subset of parameters.
+df_B.1.3_V0 <- clean_data |> 
+  group_by(What.justification.was.provided.for.choice.of.parameters.to.calibrate.) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="What.justification.was.provided.for.choice.of.parameters.to.calibrate.")|> 
+  mutate(Field= "B.1.3. What justification was provided for choice of parameters to calibrate? Only for studies which calibrated a subset of parameters.", .before = Options)
+# Recode to account for some articles with several options
+# Parameters are relevant
+df_B.1.3_relevant<- df_B.1.3_V0 |> 
+  filter(grepl("relevant", Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options ="Parameters are relevant to question of interest.", .before = Count)|> 
+  mutate(Field= "B.1.3. What justification was provided for choice of parameters to calibrate? Only for studies which calibrated a subset of parameters.", .before = Options)
+# Parameters are uncertain
+df_B.1.3_uncertain<- df_B.1.3_V0 |> 
+  filter(grepl("uncertain", Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options ="Parameters are uncertain.", .before = Count)|> 
+  mutate(Field= "B.1.3. What justification was provided for choice of parameters to calibrate? Only for studies which calibrated a subset of parameters.", .before = Options)
+# Not reported
+df_B.1.3_Not_reported <- df_B.1.3_V0 |> 
+  filter(grepl("Not reported", Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options ="Not reported", .before = Count)|> 
+  mutate(Field= "B.1.3. What justification was provided for choice of parameters to calibrate? Only for studies which calibrated a subset of parameters.", .before = Options)
+# bind
+df_B.1.3 <- rbind(df_B.1.3_relevant, df_B.1.3_uncertain, df_B.1.3_Not_reported)
+
+
+
+
+# B.1.4. How many parameters were calibrated?
+df_B.1.4 <- clean_data |> 
+  mutate(How.many.parameters.were.calibrated. = factor(How.many.parameters.were.calibrated., levels= c("Single ", "Multiple", "Not reported")))|> 
+  group_by(How.many.parameters.were.calibrated.) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="How.many.parameters.were.calibrated.")|> 
+  mutate(Field= "B.1.4. How many parameters were calibrated?", .before = Options)
+
+
+
+```
+# B.2. Calibration targets
+```{r}
+# B.2.1. Type of data used for defining calibration targets
+df_B.2.1_V0 <- clean_data |> 
+  group_by(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.")|> 
+  mutate(Field= "B.2.1. Type of data used for defining calibration targets", .before = Options)
+# Recode to account for some articles with several options
+B.2.1_Options <- c("Climate", "Contact", "Cost", "Demographic" , "trials", "Incidence", "Notifications", "Prevalence", "Spatial", "Treatment", "Not reported", "Other") 
+df_B.2.1 <- data.frame(matrix(ncol = length(df_B.2.1_V0), nrow = length(B.2.1_Options)))
+colnames(df_B.2.1) <- names(df_B.2.1_V0)
+for(i in 1: length(B.2.1_Options)){
+  df_B.2.1[i,] <- df_B.2.1_V0 |> 
+  filter(grepl(B.2.1_Options[i], Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options =B.2.1_Options[i], .before = Count)|> 
+  mutate(Field= "B.1.3. What justification was provided for choice of parameters to calibrate? Only for studies which calibrated a subset of parameters.", .before = Options)
+  
+}
+
+
+
+# B.2.2. Resolution of data used for defining calibration targets
+df_B.2.2_V0 <- clean_data |> 
+  group_by(Resolution.of.data..used.for.defining.calibration.targets) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Resolution.of.data..used.for.defining.calibration.targets")|> 
+  mutate(Field= "B.2.2. Resolution of data used for defining calibration targets", .before = Options)
+# Recode to account for some articles with several options
+B.2.2_Options <- c("Empirical", "estimates", "Not reported") 
+df_B.2.2 <- data.frame(matrix(ncol = length(df_B.2.2_V0), nrow = length(B.2.2_Options)))
+colnames(df_B.2.2) <- names(df_B.2.2_V0)
+for(i in 1: length(B.2.2_Options)){
+  df_B.2.2[i,] <- df_B.2.2_V0 |> 
+  filter(grepl(B.2.2_Options[i], Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options =B.2.2_Options[i], .before = Count)|> 
+  mutate(Field= "B.2.2. Resolution of data used for defining calibration targets", .before = Options)
+}
+
+
+#  B.2.3.  How many calibration targets were used for estimation?
+df_B.2.3 <- clean_data |> 
+  group_by(How.many.calibration.targets.were.used.for.estimation.) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="How.many.calibration.targets.were.used.for.estimation.")|> 
+  mutate(Field= "B.2.3.  How many calibration targets were used for estimation?", .before = Options)
+
+```
+
+
+
+# C. Process
+```{r}
+# C.1. Number of steps 
+df_C.1 <- clean_data |> 
+  group_by(Number.of.steps..single.or.sequential.) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Number.of.steps..single.or.sequential.")|> 
+  mutate(Field= "C.1. Number of steps", .before = Options)
+
+
+# C.2. Name of calibration algorithm 
+df_C.2 <- clean_data |> 
+    mutate(Name.of.calibration.algorithm = factor(Name.of.calibration.algorithm, levels= c("Markov Chain Monte Carlo", "Approximate Bayesian Computation", "Maximum likelihood estimation", "Least squares estimation",  "Manual (hand-tuning)", "Not reported", "Other" )))|> 
+group_by(Name.of.calibration.algorithm) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Name.of.calibration.algorithm")|> 
+  mutate(Field= "C.2. Name of calibration algorithm", .before = Options)
+
+
+
+# C.3. Is calibration implementation (code) available in an open-access repository? 
+df_C.3 <- clean_data |> 
+  group_by(Is.calibration.implementation..code..available.in.an.open.access.repository.) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Is.calibration.implementation..code..available.in.an.open.access.repository.")|> 
+  mutate(Field= "C.3. Is calibration implementation (code) available in an open-access repository?", .before = Options)
+
+
+# C.4. Goodness-of-fit (GOF) measure employed within calibration algorithm
+df_C.4 <- clean_data |> 
+    mutate(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm = factor(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm, levels= c("Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)", "Data likelihood ", "Not reported", "Not clear", "Other")))|> 
+group_by(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm")|> 
+  mutate(Field= "C.4. Goodness-of-fit (GOF) measure employed within calibration algorithm", .before = Options)
+
+# C.5. What programming language was used for calibration?
+df_C.5_V0 <- clean_data |> 
+  group_by(What.programming.language.was.used.for.calibration.) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="What.programming.language.was.used.for.calibration.")|> 
+  mutate(Field= "C.5. What programming language was used for calibration?", .before = Options)
+# Recode to account for some articles with several options
+C.5_Options <- c("R", "Python", "Matlab", "Julia", "C", "Not reported", "Other") 
+df_C.5 <- data.frame(matrix(ncol = length(df_C.5_V0), nrow = length(C.5_Options)))
+colnames(df_C.5) <- names(df_C.5_V0)
+for(i in 1: length(C.5_Options)){
+  df_C.5[i,] <- df_C.5_V0 |> 
+  filter(grepl(C.5_Options[i], Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options =C.5_Options[i], .before = Count)|> 
+  mutate(Field= "C.5. What programming language was used for calibration?", .before = Options)
+}
+
+# C.6. Do authors list any programming packages used for calibration?
+df_C.6 <- clean_data |> 
+  mutate(Do.authors.list.any.programming.packages.used.for.calibration. = factor(Do.authors.list.any.programming.packages.used.for.calibration., levels= c("Yes", "No")))|> 
+  group_by(Do.authors.list.any.programming.packages.used.for.calibration.) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Do.authors.list.any.programming.packages.used.for.calibration.")|> 
+  mutate(Field= "C.6. Do authors list any programming packages used for calibration?", .before = Options)
+
+```
+
+
+# D. Output 
+```{r}
+# D.1. Nature of calibration results
+df_D.1 <- clean_data |> 
+    mutate(Nature.of.calibration.results = factor(Nature.of.calibration.results, levels= c("Point estimate (single parameter / parameter set)", "Sample estimate (multiple parameter sets)", "Distribution estimate (a distribution function which generates parameter values)", "Not reported ", "Other ")))|> 
+  group_by(Nature.of.calibration.results) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="Nature.of.calibration.results")|> 
+  mutate(Field= "D.1. Nature of calibration results", .before = Options)
+
+# D.2. How are calibration results reported? 
+df_D.2_V0 <- clean_data |> 
+  group_by(How.are.calibration.results.reported.) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="How.are.calibration.results.reported.")|> 
+  mutate(Field= "D.2. How are calibration results reported?", .before = Options)
+# Recode to account for some articles with several options
+D.2_Options <- c("Numerical", "Graphical", "not reported") 
+df_D.2 <- data.frame(matrix(ncol = length(df_D.2_V0), nrow = length(D.2_Options)))
+colnames(df_D.2) <- names(df_D.2_V0)
+for(i in 1: length(D.2_Options)){
+  df_D.2[i,] <- df_D.2_V0 |> 
+  filter(grepl(D.2_Options[i], Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options =D.2_Options[i], .before = Count)|> 
+  mutate(Field= "D.2. What programming language was used for calibration?", .before = Options)
+}
+
+
+# D.3. How is uncertainty in calibration outputs reported? 
+df_D.3_V0 <- clean_data |> 
+  group_by(How.is.uncertainty.in.calibration.outputs.reported.) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="How.is.uncertainty.in.calibration.outputs.reported.")|> 
+  mutate(Field= "D.3. How is uncertainty in calibration outputs reported?", .before = Options)
+# Recode to account for some articles with several options
+D.3_Options <- c("Numerical", "Graphical", "not reported") 
+df_D.3 <- data.frame(matrix(ncol = length(df_D.3_V0), nrow = length(D.3_Options)))
+colnames(df_D.3) <- names(df_D.3_V0)
+for(i in 1: length(D.3_Options)){
+  df_D.3[i,] <- df_D.3_V0 |> 
+  filter(grepl(D.3_Options[i], Options)) |> 
+  summarise(Count=sum(Count),            
+            Percentage= sum(Percentage))|> 
+  mutate(Options =D.3_Options[i], .before = Count)|> 
+  mutate(Field= "D.3. What programming language was used for calibration?", .before = Options)
+}
+
+
+# D.4. What is the size of the calibration output? 
+df_D.4 <- clean_data |> 
+  mutate(size.of.the.calibration.output.reported = ifelse(What.is.the.size.of.the.calibration.output. == "Not reported", "Not reported", "[Number provided]"))|> 
+  mutate(size.of.the.calibration.output.reported = factor(size.of.the.calibration.output.reported, levels= c("[Number provided]", "Not reported")))|> 
+  group_by(size.of.the.calibration.output.reported) |>
+  summarise(Count=n(), 
+            Percentage= 100*round(Count/nrow(clean_data), 3))|> 
+  rename("Options" ="size.of.the.calibration.output.reported")|> 
+  mutate(Field= "D.4. What is the size of the calibration output?", .before = Options)
+
+# If number provided, what is the range of the reported size? 
+Calibration_size_range <- clean_data |> 
+  mutate(size.of.the.calibration.output.reported = ifelse(What.is.the.size.of.the.calibration.output. == "Not reported", "Not reported", "[Number provided]"))|>
+  filter(size.of.the.calibration.output.reported != "Not reported")|> 
+  summary(as.numeric(What.is.the.size.of.the.calibration.output.))
+
+# range(as.numeric(gsub(",", "" , clean_data |> 
+#   mutate(size.of.the.calibration.output.reported = ifelse(What.is.the.size.of.the.calibration.output. == "Not reported", "Not reported", "[Number provided]"))|>
+#   filter(size.of.the.calibration.output.reported != "Not reported")|> 
+#   pull(What.is.the.size.of.the.calibration.output.))), na.rm=T)
+
+```
+
+
+
+

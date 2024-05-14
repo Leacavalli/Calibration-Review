@@ -1,0 +1,219 @@
+---
+title: "Data cleaning V2"
+output: html_document
+date: "2024-05-13"
+Author: Léa Cavalli
+---
+
+# Set up environment
+```{r}
+# Clean environment
+rm( list = ls() )
+
+# load necessary libraries
+library(tidyverse)
+
+# Load data
+setwd("~/GitHub/Calibration-Review")
+raw_data <- read.csv("review_396964_20240513195549.csv")
+```
+
+# Correct country inconsistencies
+```{r}
+# Explore country names 
+raw_data |> 
+  group_by(Study.setting) |>
+  summarise(N=n())|>
+  arrange(-N)
+# install.packages("countries")
+library(countries)
+list_countries <- list_countries(nomenclature = "name_en")
+raw_data |> 
+  filter(! Study.setting %in% list_countries) |> 
+  pull(Study.setting)
+
+
+# Correcting some inconsistencies
+raw_data_V2 <- raw_data |>
+  mutate(Study.setting = ifelse(Study.setting %in% c("United States", "USA"), "United States of America", Study.setting))|>
+  mutate(Study.setting = ifelse(Study.setting %in% c("eSwatini ", "Swaziland"), "Eswatini", Study.setting))|>
+  mutate(Study.setting = ifelse(Study.setting %in% c("UK"), "United Kingdom", Study.setting))|>
+  mutate(Study.setting = ifelse(Study.setting %in% c("Russia"), "Russian Federation", Study.setting))|>
+  mutate(Study.setting = str_replace(Study.setting, ", and ", ", "))|>
+  mutate(Study.setting = str_replace(Study.setting, "and ", ", "))|>
+  mutate(Study.setting = gsub(";", ",", Study.setting))|>
+  mutate(Study.setting = gsub(" \n", ", ", Study.setting))|>
+  mutate(Study.setting = gsub("\n", ", ", Study.setting))|>
+  mutate(Study.setting = gsub(",,", ",", Study.setting))
+# still: # South Korea vs Democratic People's Republic of Korea vs DPR Korea
+# change ; for , 
+# change "/n" for ","
+
+
+unique(raw_data_V2|> 
+  filter(! Study.setting %in% list_countries) |> 
+  pull(Study.setting))
+
+
+# Outliers 
+raw_data_V2|> 
+  filter(Study.setting %in% c("105 LMICs", "Southeast Asia", "sub-Saharan Africa", "Sub-Saharan Africa", "Not reported", ""))
+
+
+# 3251: Study.setting = "105 LMICs"
+# 1140: Study.setting = "Southeast Asia
+# 1099: Study.setting = "sub-Saharan Africa"
+# 2404 : Study.setting = "Not reported"
+# 2007 : Study.setting = ""
+# 1159: Study.setting = "Sub-Saharan Africa"
+
+```
+
+
+# Correct known option inconsistencies
+
+```{r}
+# Correct
+raw_data_V3 <- raw_data_V2  |> 
+  mutate(External.beliefs.or.evidence = ifelse(External.beliefs.or.evidence== "Other: No prior knowledge is incorporated for parameters to be calibrated.", "No prior knowledge is incorporated for parameters to be calibrated. ", External.beliefs.or.evidence))|>
+    mutate(How.many.calibration.targets.were.used.for.estimation. = ifelse(How.many.calibration.targets.were.used.for.estimation.== "Other: Single", "Single ", How.many.calibration.targets.were.used.for.estimation.))|>
+  mutate(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm = ifelse(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm== "Other: Other", "Other ", Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm))|>
+    mutate(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm = ifelse(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm== "Other: Data likelihood", "Data likelihood ", Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm))|>
+    mutate(Nature.of.calibration.results = ifelse(Nature.of.calibration.results== "Other: Sample estimate", "Sample estimate (multiple parameter sets)", Nature.of.calibration.results))
+
+
+
+
+```
+
+
+
+# Investigate new option inconsistencies
+
+```{r}
+raw_data_V3
+
+# 0.1 Year published 
+table(raw_data_V3$Year.published)
+
+# 0.2 Disease type 
+table(raw_data_V3$Disease.type..choose.all.that.apply.)
+
+# 0.3 Model type 
+table(raw_data_V3$Model.type)
+
+# 0.4 Stochasticity in model 
+table(raw_data_V3$Stochasticity.in.model)
+raw_data  |> 
+  filter(Stochasticity.in.model =="") |> 
+  pull(Covidence..)
+# 243: Stochasticity.in.model is empty
+
+# A.1 Scientific problem being solved (what is the purpose of calibration?) 
+table(raw_data_V3$Scientific.problem.being.solved)
+
+# B.1.1. Beliefs or evidence
+table(raw_data_V3$External.beliefs.or.evidence)
+raw_data_V3  |> 
+  filter(External.beliefs.or.evidence =="")|> 
+  pull(Covidence..)
+# 1227: External.beliefs.or.evidence is empty
+
+# B.1.2. Choice of parameters to calibrate
+table(raw_data_V3$Choice.of.parameters.to.calibrate)
+
+# B.1.3. What justification was provided for choice of parameters to calibrate? Only for studies which calibrated a subset of parameters.
+table(raw_data_V3$What.justification.was.provided.for.choice.of.parameters.to.calibrate.)
+raw_data_V3  |> 
+  filter(What.justification.was.provided.for.choice.of.parameters.to.calibrate. =="Parameters are relevant to question of interest.; Other")|> 
+  pull(Covidence..)
+# 723: What.justification.was.provided.for.choice.of.parameters.to.calibrate. =="Parameters are relevant to question of interest.; Other" - check that these options are compatible/make sense. I had a quick look at the extraction form. Based on the quote used in the "Other details", I would classify this as "Parameters are relevant to question of interest."
+
+# B.1.4. How many parameters were calibrated?
+table(raw_data_V3$How.many.parameters.were.calibrated.)
+raw_data_V3  |> 
+  filter(How.many.parameters.were.calibrated. =="")|> 
+  pull(Covidence..)
+# 351: How.many.parameters.were.calibrated. is empty
+
+# B.2.2. Resolution of data used for defining calibration targets
+table(raw_data_V3$Resolution.of.data..used.for.defining.calibration.targets)
+
+#  B.2.3.  How many calibration targets were used for estimation?
+table(raw_data_V3$How.many.calibration.targets.were.used.for.estimation.)
+
+# C.1. Number of steps 
+table(raw_data_V3$Number.of.steps..single.or.sequential.)
+
+# C.2. Name of calibration algorithm 
+table(raw_data_V3$Name.of.calibration.algorithm)
+raw_data_V3  |> 
+  filter(Name.of.calibration.algorithm =="")|> 
+  pull(Covidence..)
+raw_data_V3  |> 
+  filter(Name.of.calibration.algorithm =="Other: Monte-Carlo filtering ")|> 
+  pull(Covidence..)
+# 226 : Name.of.calibration.algorithm is empty
+# 3008 : Name.of.calibration.algorithm =="Other: Monte-Carlo filtering "
+
+# C.3. Is calibration implementation (code) available in an open-access repository? 
+table(raw_data_V3$Is.calibration.implementation..code..available.in.an.open.access.repository.)
+
+# C.4. Goodness-of-fit (GOF) measure employed within calibration algorithm
+table(raw_data_V3$Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm)
+
+# C.5. What programming language was used for calibration?
+table(raw_data_V3$What.programming.language.was.used.for.calibration.)
+
+# C.6. Do authors list any programming packages used for calibration?
+table(raw_data_V3$Do.authors.list.any.programming.packages.used.for.calibration.)
+
+# D.1. Nature of calibration results
+table(raw_data_V3$Nature.of.calibration.results)
+
+# D.2. How are calibration results reported? 
+table(raw_data_V3$How.are.calibration.results.reported.)
+
+# D.3. How is uncertainty in calibration outputs reported? 
+table(raw_data_V3$How.is.uncertainty.in.calibration.outputs.reported.)
+raw_data_V3  |> 
+  group_by(How.is.uncertainty.in.calibration.outputs.reported.)|> 
+  summarise(n())
+raw_data_V3  |> 
+  filter(How.is.uncertainty.in.calibration.outputs.reported. =="Uncertainty in calibration outputs is not reported.; Other ")|> 
+  pull(Covidence..)
+# 1247 : Multiple calibration
+
+# D.4. What is the size of the calibration output? 
+table(raw_data_V3  |> 
+        mutate(size.of.the.calibration.output.reported = ifelse(What.is.the.size.of.the.calibration.output. == "Not reported", "Not reported", "[Number provided]"))|>
+        pull(size.of.the.calibration.output.reported))
+
+# If number provided, what is the range of the reported size? 
+raw_data_V3  |> 
+        mutate(size.of.the.calibration.output.reported = ifelse(What.is.the.size.of.the.calibration.output. == "Not reported", "Not reported", "[Number provided]"))|>
+        filter(size.of.the.calibration.output.reported != "Not reported")|>
+        pull(What.is.the.size.of.the.calibration.output.)
+
+```
+
+
+
+Emmanuelle: 
+  # 226 : Name.of.calibration.algorithm is empty
+  # 3008 : Name.of.calibration.algorithm is set to a non-existing option ("Other: Monte-Carlo filtering "). If you think this is the algorithm used, you should set "Name of algorithm" to "Other", and then set "Other details" below to "Monte-Carlo filtering". 
+
+
+Ruchita: 
+  # 351 :  How.many.parameters.were.calibrated. is empty
+  # 1227: External.beliefs.or.evidence is empty
+  # 243: Stochasticity.in.model is empty
+  # 789: How.are.calibration.results.reported. == "Numerical: e.g. as value(s).; Calibration results are not reported. " - These options are not compatible. It seems to be either an unreported multiple calibration case (not tagged on covidence), or a mistake for extractors (Both Yunfei and I used these options, which did not result in a )
+  # 1524 : How.is.uncertainty.in.calibration.outputs.reported. == "Graphical: As a plot; e.g., a line with shaded areas indicating uncertainty intervals ; Uncertainty in calibration outputs is not reported." - Same as above
+  # 723: What.justification.was.provided.for.choice.of.parameters.to.calibrate. =="Parameters are relevant to question of interest.; Other" - check that these options are compatible/make sense. I had a quick look at the extraction form. Based on the quote used in the "Other details", I would classify this as "Parameters are relevant to question of interest.
+
+Nicole: 
+  # 3216 : Name.of.calibration.algorithm is set to a non-existing option ("Method of moments"). If you think this is the algorithm used, you should set "Name of algorithm" to "Other", and then set "Other details" below to "Method of moments". 
+  # 894 : Name.of.calibration.algorithm is set to a non-existing option ("Latin Hypercube Sampling")	
+
+

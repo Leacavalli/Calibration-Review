@@ -15,7 +15,7 @@ library(tidyverse)
 
 # Load data
 setwd("~/GitHub/Calibration-Review")
-clean_data <- read.csv("review_396964_20240504214514.csv")
+clean_data <- read.csv("review_396964_20240513195549.csv")
 # clean_data <- read.csv("Clean_data_review.csv")
 
 ```
@@ -40,25 +40,17 @@ df_0.2_V0 <- clean_data |>
   rename("Options" ="Disease.type..choose.all.that.apply.")|> 
   mutate(Field= "0.2 Disease type", .before = Options)
 # Recode to account for some articles with several options
-df_0.2_HIV <- df_0.2_V0 |> 
-  filter(grepl("HIV", Options)) |> 
+Disease_type_Options <- c("HIV", "TB", "Malaria") 
+df_0.2 <- data.frame(matrix(ncol = length(df_0.2_V0), nrow = length(Disease_type_Options)))
+colnames(df_0.2) <- names(df_0.2_V0)
+for(i in 1: length(Disease_type_Options)){
+  df_0.2[i,] <- df_0.2_V0 |> 
+  filter(grepl(Disease_type_Options[i], Options)) |> 
   summarise(Count=sum(Count),            
             Percentage= sum(Percentage))|> 
-  mutate(Options ="HIV", .before = Count)|> 
-  mutate(Field= "Scientific.problem.being.solved", .before = Options)
-df_0.2_TB <- df_0.2_V0 |> 
-  filter(grepl("TB", Options)) |> 
-  summarise(Count=sum(Count),            
-            Percentage= sum(Percentage))|> 
-  mutate(Options ="TB", .before = Count)|> 
-  mutate(Field= "Scientific.problem.being.solved", .before = Options)
-df_0.2_Malaria <- df_0.2_V0 |> 
-  filter(grepl("Malaria", Options)) |> 
-  summarise(Count=sum(Count),            
-            Percentage= sum(Percentage))|> 
-  mutate(Options ="Malaria", .before = Count)|> 
-  mutate(Field= "Scientific.problem.being.solved", .before = Options)
-df_0.2 <- rbind(df_0.2_HIV, df_0.2_TB, df_0.2_Malaria)
+  mutate(Options =Disease_type_Options[i], .before = Count)|> 
+  mutate(Field= "0.2 Disease type", .before = Options)
+}
 
 # 0.3 Model type 
 df_0.3 <- clean_data |> 
@@ -393,16 +385,35 @@ df_D.4 <- clean_data |>
 # If number provided, what is the range of the reported size? 
 Calibration_size_range <- clean_data |> 
   mutate(size.of.the.calibration.output.reported = ifelse(What.is.the.size.of.the.calibration.output. == "Not reported", "Not reported", "[Number provided]"))|>
-  filter(size.of.the.calibration.output.reported != "Not reported")|> 
-  summary(as.numeric(What.is.the.size.of.the.calibration.output.))
+  filter(size.of.the.calibration.output.reported != "Not reported") |> 
+  mutate(What.is.the.size.of.the.calibration.output.= as.numeric(str_replace(What.is.the.size.of.the.calibration.output., ",", "")))
 
-# range(as.numeric(gsub(",", "" , clean_data |> 
-#   mutate(size.of.the.calibration.output.reported = ifelse(What.is.the.size.of.the.calibration.output. == "Not reported", "Not reported", "[Number provided]"))|>
-#   filter(size.of.the.calibration.output.reported != "Not reported")|> 
-#   pull(What.is.the.size.of.the.calibration.output.))), na.rm=T)
+# Number of point estimates
+Calibration_size_range |> 
+  group_by(Name.of.calibration.algorithm) |> 
+  summarise(N_point_estimate= sum(Nature.of.calibration.results == "Point estimate (single parameter / parameter set)"))
+
+
+# Range of calibration size among those that were not point estimates
+Calibration_size_range |> 
+  filter(Nature.of.calibration.results != "Point estimate (single parameter / parameter set)") |> 
+  group_by(Name.of.calibration.algorithm) |> 
+  summarise(size_min= min(What.is.the.size.of.the.calibration.output.), 
+            size_max= max(What.is.the.size.of.the.calibration.output.))
 
 ```
 
+# Assemble final dataframe
+```{r}
+Objective1_df <- rbind(df_0.1, df_0.2, df_0.3, df_0.4, 
+                       df_A.1,
+                       df_B.1.1, df_B.1.2, df_B.1.3, df_B.1.4,
+                       df_B.2.1, df_B.2.2, df_B.2.3, 
+                       df_C.1, df_C.2, df_C.3, df_C.4, df_C.5, df_C.6, 
+                       df_D.1, df_D.2, df_D.3, df_D.4)
 
+Objective1_df
+
+```
 
 

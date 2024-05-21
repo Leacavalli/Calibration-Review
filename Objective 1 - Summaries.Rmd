@@ -15,8 +15,7 @@ library(tidyverse)
 
 # Load data
 setwd("~/GitHub/Calibration-Review")
-clean_data <- read.csv("review_396964_20240513195549.csv")
-# clean_data <- read.csv("Clean_data_review.csv")
+clean_data <- read.csv("Clean_data_review.csv")
 
 ```
 
@@ -260,7 +259,7 @@ df_C.1 <- clean_data |>
 
 # C.2. Name of calibration algorithm 
 df_C.2 <- clean_data |> 
-    mutate(Name.of.calibration.algorithm = factor(Name.of.calibration.algorithm, levels= c("Markov Chain Monte Carlo", "Approximate Bayesian Computation", "Maximum likelihood estimation", "Least squares estimation",  "Manual (hand-tuning)", "Not reported", "Other" )))|> 
+    mutate(Name.of.calibration.algorithm = factor(Name.of.calibration.algorithm, levels= c("Markov Chain Monte Carlo", "Approximate Bayesian Computation", "Maximum likelihood estimation", "Least squares estimation",  "Manual (hand-tuning)", "Not reported", "Other " )))|> 
 group_by(Name.of.calibration.algorithm) |>
   summarise(Count=n(), 
             Percentage= 100*round(Count/nrow(clean_data), 3))|> 
@@ -280,7 +279,7 @@ df_C.3 <- clean_data |>
 
 # C.4. Goodness-of-fit (GOF) measure employed within calibration algorithm
 df_C.4 <- clean_data |> 
-    mutate(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm = factor(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm, levels= c("Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)", "Data likelihood ", "Not reported", "Not clear", "Other")))|> 
+    mutate(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm = factor(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm, levels= c("Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)", "Data likelihood ", "Not reported", "Not clear", "Other ")))|> 
 group_by(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm) |>
   summarise(Count=n(), 
             Percentage= 100*round(Count/nrow(clean_data), 3))|> 
@@ -401,6 +400,65 @@ Calibration_size_range |>
   summarise(size_min= min(What.is.the.size.of.the.calibration.output.), 
             size_max= max(What.is.the.size.of.the.calibration.output.))
 
+Calibration_size_range |> 
+  group_by(Name.of.calibration.algorithm) |> 
+  summarise(size_min= min(What.is.the.size.of.the.calibration.output.), 
+            size_max= max(What.is.the.size.of.the.calibration.output.))
+
+# Calibration_size_range |> 
+#   ggplot() +
+#   geom_histogram(aes(x=What.is.the.size.of.the.calibration.output.))+
+#   theme_classic()+
+#   facet_grid(Name.of.calibration.algorithm ~ .)+
+#   xlab("Size of calibration output")
+
+Calibration_size_range |> 
+  group_by(Name.of.calibration.algorithm) |> 
+  summarise(size_min= min(What.is.the.size.of.the.calibration.output.), 
+            size_max= max(What.is.the.size.of.the.calibration.output.))|> 
+  filter(Name.of.calibration.algorithm != "Other ")|> 
+  ggplot()+ 
+  geom_errorbar(aes(x=Name.of.calibration.algorithm, 
+                            ymin= size_min , 
+                            ymax= size_max), width=0.2) + 
+    theme_classic()+
+  coord_flip()+
+  xlab("Name of calibration algorithm")
+
+
+# Chord diagram for association between two categorical variables
+# install.packages("circlize")
+library(circlize)
+# Disease Type and calibration algorithm
+clean_data |> 
+  select(Disease.type..choose.all.that.apply., Name.of.calibration.algorithm) |> 
+  mutate(Name.of.calibration.algorithm= ifelse(Name.of.calibration.algorithm=="Approximate Bayesian Computation", "ABC",
+                                               ifelse(Name.of.calibration.algorithm=="Maximum likelihood estimation", "MLE", 
+                                                      ifelse(Name.of.calibration.algorithm=="Least squares estimation", "LSE", 
+                                                             ifelse(Name.of.calibration.algorithm=="Manual (hand-tuning)", "Manual", 
+                                                                    ifelse(Name.of.calibration.algorithm=="Markov Chain Monte Carlo", "MCMC", 
+                                                                    Name.of.calibration.algorithm)))))) |> 
+  mutate( Name.of.calibration.algorithm==factor(Name.of.calibration.algorithm, levels= c("MCMC", "ABC", "MLE", "LSE", "Manual", "Other", "Not Reported")))|> 
+  chordDiagram()
+
+
+# # Calibration algorithm and nature of the output
+# clean_data |> 
+#   select(Nature.of.calibration.results, Name.of.calibration.algorithm) |> 
+#   mutate(Name.of.calibration.algorithm= ifelse(Name.of.calibration.algorithm=="Approximate Bayesian Computation", "ABC",
+#                                                ifelse(Name.of.calibration.algorithm=="Maximum likelihood estimation", "MLE", 
+#                                                       ifelse(Name.of.calibration.algorithm=="Least squares estimation", "LSE", 
+#                                                              ifelse(Name.of.calibration.algorithm=="Manual (hand-tuning)", "Manual", 
+#                                                                     ifelse(Name.of.calibration.algorithm=="Markov Chain Monte Carlo", "MCMC", 
+#                                                                     Name.of.calibration.algorithm)))))) |> 
+#   mutate( Name.of.calibration.algorithm==factor(Name.of.calibration.algorithm, levels= c("MCMC", "ABC", "MLE", "LSE", "Manual", "Other", "Not Reported")))|> 
+#   mutate(Nature.of.calibration.results= ifelse(Nature.of.calibration.results=="Distribution estimate (a distribution function which generates parameter values)", "Distribution",
+#                                                ifelse(Nature.of.calibration.results=="Point estimate (single parameter / parameter set)", "Point estimate", 
+#                                                       ifelse(Nature.of.calibration.results=="Sample estimate (multiple parameter sets)", "Sample",  Nature.of.calibration.results)))) |> 
+#     mutate( Nature.of.calibration.results==factor(Nature.of.calibration.results, levels= c("Point estimate", "Sample", "Distribution",  "Not Reported")))|> 
+# chordDiagram()
+
+
 ```
 
 # Assemble final dataframe
@@ -413,6 +471,10 @@ Objective1_df <- rbind(df_0.1, df_0.2, df_0.3, df_0.4,
                        df_D.1, df_D.2, df_D.3, df_D.4)
 
 Objective1_df
+# Write a file 
+library(xlsx)
+write.xlsx(as.data.frame(Objective1_df), file="Data_extraction_sheet_v04.xlsx",
+  sheetName = "Summaries", append=TRUE , row.names = F, col.names = T)
 
 ```
 

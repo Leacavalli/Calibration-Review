@@ -15,8 +15,7 @@ library(tidyverse)
 
 # Load data
 setwd("~/GitHub/Calibration-Review")
-clean_data <- read.csv("review_396964_20240504214514.csv")
-# clean_data <- read.csv("Clean_data_review.csv")
+clean_data <- read.csv("Clean_data_review.csv")
 
 ```
 
@@ -140,18 +139,23 @@ Objective3_df <- Objective3_df |>
                                                 ifelse(Sum_Reporting_Score> 5, "Fair", "Low")))
 
 Objective3_df
-
 table(Objective3_df$Reporting_comprehensiveness)
+
+# Write a file 
+library(xlsx)
+write.xlsx(as.data.frame(Objective3_df), file="Data_extraction_sheet_v04.xlsx",
+  sheetName = "Reporting", append=TRUE , row.names = F, col.names = T)
+
 ```
 
 
 # Summarise reporting score by Category
 ```{r}
 # Number articles reporting each category
-colSums(Objective3_df[,-(1:3)]) 
+colSums((Objective3_df[,-c(1:3, ncol(Objective3_df))])) 
 
 # Percentage articles reporting each category
-round(100 * colSums(Objective3_df[,-(1:3)]) / nrow(Objective3_df))
+round(100 * colSums(Objective3_df[,-c(1:3, ncol(Objective3_df))]) / nrow(Objective3_df))
 
 ```
 

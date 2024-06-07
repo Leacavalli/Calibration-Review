@@ -405,12 +405,12 @@ Calibration_size_range |>
   summarise(size_min= min(What.is.the.size.of.the.calibration.output.), 
             size_max= max(What.is.the.size.of.the.calibration.output.))
 
-# Calibration_size_range |> 
-#   ggplot() +
-#   geom_histogram(aes(x=What.is.the.size.of.the.calibration.output.))+
-#   theme_classic()+
-#   facet_grid(Name.of.calibration.algorithm ~ .)+
-#   xlab("Size of calibration output")
+Calibration_size_range |>
+  ggplot() +
+  geom_histogram(aes(x=What.is.the.size.of.the.calibration.output.))+
+  theme_classic()+
+  facet_grid(Name.of.calibration.algorithm ~ .)+
+  xlab("Size of calibration output")
 
 Calibration_size_range |> 
   group_by(Name.of.calibration.algorithm) |> 

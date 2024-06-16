@@ -12,29 +12,39 @@ rm( list = ls() )
 
 # load necessary libraries
 library(tidyverse)
+library(xlsx)
 
-# Load data
+# Load covidence raw data
 setwd("~/GitHub/Calibration-Review")
-raw_data <- read.csv("review_396964_20240608035120.csv")
+Covidence_raw_data <- read.csv("Covidence_raw_data.csv")
+
+# Load multiple calibrations data
+Multiple_Calibration_data <- read.xlsx("Multiple_Calibration_data.xlsx", sheetName = "Sheet1")
+colnames(Multiple_Calibration_data) <- Multiple_Calibration_data[2,]
+Multiple_Calibration_data  <- Multiple_Calibration_data[-c(1:2),]
+
+# Remove multiple calibration paper from covidence raw data 
+Covidence_raw_data_1cal <- Covidence_raw_data |>
+  filter(!(Covidence.. %in% Multiple_Calibration_data$`Covidence ID`)) 
 ```
 
 # Correct country inconsistencies
 ```{r}
 # Explore country names 
-raw_data |> 
+Covidence_raw_data_1cal |> 
   group_by(Study.setting) |>
   summarise(N=n())|>
   arrange(-N)
 # install.packages("countries")
 library(countries)
 list_countries <- list_countries(nomenclature = "name_en")
-raw_data |> 
+Covidence_raw_data_1cal |> 
   filter(! Study.setting %in% list_countries) |> 
   pull(Study.setting)
 
 
 # Correcting some inconsistencies
-raw_data_V2 <- raw_data |>
+Covidence_raw_data_1cal_V2 <- Covidence_raw_data_1cal |>
   mutate(Study.setting = ifelse(Study.setting %in% c("United States", "USA"), "United States of America", Study.setting))|>
   mutate(Study.setting = ifelse(Study.setting %in% c("eSwatini ", "Swaziland"), "Eswatini", Study.setting))|>
   mutate(Study.setting = ifelse(Study.setting %in% c("UK"), "United Kingdom", Study.setting))|>
@@ -50,31 +60,26 @@ raw_data_V2 <- raw_data |>
 # change "/n" for ","
 
 
-unique(raw_data_V2|> 
+unique(Covidence_raw_data_1cal_V2|> 
   filter(! Study.setting %in% list_countries) |> 
   pull(Study.setting))
 
 
 # Outliers 
-raw_data_V2|> 
-  filter(Study.setting %in% c("105 LMICs", "Southeast Asia", "sub-Saharan Africa", "Sub-Saharan Africa", "Not reported", ""))
-
-
-# 3251: Study.setting = "105 LMICs"
-# 1140: Study.setting = "Southeast Asia
-# 1099: Study.setting = "sub-Saharan Africa"
-# 2404 : Study.setting = "Not reported"
-# 2007 : Study.setting = ""
-# 1159: Study.setting = "Sub-Saharan Africa"
+Covidence_raw_data_1cal_V2|> filter(Study.setting == "41 sub-Saharan Africa countries")|> pull(Covidence..)
+Covidence_raw_data_1cal_V2|> filter(Study.setting == "")|> pull(Covidence..)
+Covidence_raw_data_1cal_V2|> filter(Study.setting == "Southeast Asia")|> pull(Covidence..)
+Covidence_raw_data_1cal_V2|> filter(Study.setting == "sub-Saharan Africa")|> pull(Covidence..)
+Covidence_raw_data_1cal_V2|> filter(Study.setting == "Sub-Saharan Africa")|> pull(Covidence..)
+Covidence_raw_data_1cal_V2|> filter(Study.setting == "South-East Asia region, East Mediterranean region, South , North America region")|> pull(Covidence..)
 
 ```
 
 
 # Correct known option inconsistencies
-
 ```{r}
 # Correct
-raw_data_V3 <- raw_data_V2  |> 
+Covidence_raw_data_1cal_V3 <- Covidence_raw_data_1cal_V2  |> 
   mutate(External.beliefs.or.evidence = ifelse(External.beliefs.or.evidence== "Other: No prior knowledge is incorporated for parameters to be calibrated.", "No prior knowledge is incorporated for parameters to be calibrated. ", External.beliefs.or.evidence))|>
     mutate(How.many.calibration.targets.were.used.for.estimation. = ifelse(How.many.calibration.targets.were.used.for.estimation.== "Other: Single", "Single ", How.many.calibration.targets.were.used.for.estimation.))|>
   mutate(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm = ifelse(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm== "Other: Other", "Other ", Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm))|>
@@ -86,116 +91,179 @@ raw_data_V3 <- raw_data_V2  |>
     mutate(How.many.parameters.were.calibrated. = ifelse(How.many.parameters.were.calibrated.== "Other: Single", "Single ", How.many.parameters.were.calibrated.))|>
     mutate(How.many.calibration.targets.were.used.for.estimation. = ifelse(How.many.calibration.targets.were.used.for.estimation.== "Other: Multiple", "Multiple ", How.many.calibration.targets.were.used.for.estimation.))|>
     mutate(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm = ifelse(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm== "Other: Ad-Hoc Distance", "Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)", Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm))|>
-    mutate(Nature.of.calibration.results = ifelse(Nature.of.calibration.results== "Other: Point estimate", "Point estimate (single parameter / parameter set)", Nature.of.calibration.results))
-
-
+    mutate(Nature.of.calibration.results = ifelse(Nature.of.calibration.results== "Other: Point estimate", "Point estimate (single parameter / parameter set)", Nature.of.calibration.results))|>
+    mutate(Number.of.steps..single.or.sequential. = ifelse(Number.of.steps..single.or.sequential.== "Other: \nNot reported", "Not reported", Number.of.steps..single.or.sequential.))|>
+    mutate(Name.of.calibration.algorithm = ifelse(Name.of.calibration.algorithm== "Other: Not reported ", "Not reported", Name.of.calibration.algorithm))
 ```
 
 
 
 # Investigate new option inconsistencies
-
 ```{r}
 # 0.1 Year published 
-table(raw_data_V3$Year.published)
+table(Covidence_raw_data_1cal_V3$Year.published)
 
 # 0.2 Disease type 
-table(raw_data_V3$Disease.type..choose.all.that.apply.)
+table(Covidence_raw_data_1cal_V3$Disease.type..choose.all.that.apply.)
 
 # 0.3 Model type 
-table(raw_data_V3$Model.type)
+table(Covidence_raw_data_1cal_V3$Model.type)
 
 # 0.4 Stochasticity in model 
-table(raw_data_V3$Stochasticity.in.model)
-raw_data_V3  |> 
-  filter(Stochasticity.in.model =="Other: ")|> 
+table(Covidence_raw_data_1cal_V3$Stochasticity.in.model)
+
+Covidence_raw_data_1cal_V3  |> 
+  filter(Stochasticity.in.model =="Other: Both deterministic and stochastic ")|> 
   pull(Covidence..)
-# 35
+# 2710: Stochasticity.in.model =="Other: Both deterministic and stochastic " Yunfei Li
+
 
 # A.1 Scientific problem being solved (what is the purpose of calibration?) 
-table(raw_data_V3$Scientific.problem.being.solved)
+table(Covidence_raw_data_1cal_V3$Scientific.problem.being.solved)
+Covidence_raw_data_1cal_V3  |> 
+  filter(Scientific.problem.being.solved =="")|> 
+  pull(Covidence..)
+# 1071: Scientific.problem.being.solved ==""  - Yunfei
 
 # B.1.1. Beliefs or evidence
-table(raw_data_V3$External.beliefs.or.evidence)
+table(Covidence_raw_data_1cal_V3$External.beliefs.or.evidence)
+Covidence_raw_data_1cal_V3  |> 
+  filter(External.beliefs.or.evidence =="")|> 
+  pull(Covidence..)
+# 2966:External.beliefs.or.evidence =="" - Yunfei 
+# 2243: External.beliefs.or.evidence =="" - Yunfei 
+# 1628: External.beliefs.or.evidence =="" - Yunfei 
+# 660: External.beliefs.or.evidence ==""  - Yunfei 
 
 # B.1.2. Choice of parameters to calibrate
-table(raw_data_V3$Choice.of.parameters.to.calibrate)
+table(Covidence_raw_data_1cal_V3$Choice.of.parameters.to.calibrate)
+Covidence_raw_data_1cal_V3  |> 
+  filter(Choice.of.parameters.to.calibrate =="")|> 
+  pull(Covidence..)
+# 2243: Choice.of.parameters.to.calibrate =="" - Yunfei
 
 # B.1.3. What justification was provided for choice of parameters to calibrate? Only for studies which calibrated a subset of parameters.
-table(raw_data_V3$What.justification.was.provided.for.choice.of.parameters.to.calibrate.)
-raw_data_V3  |> 
-  filter(What.justification.was.provided.for.choice.of.parameters.to.calibrate. =="Parameters are relevant to question of interest.; Other")|> 
+table(Covidence_raw_data_1cal_V3$What.justification.was.provided.for.choice.of.parameters.to.calibrate.)
+Covidence_raw_data_1cal_V3  |> 
+  filter(What.justification.was.provided.for.choice.of.parameters.to.calibrate. =="")|> 
   pull(Covidence..)
-# 1285 : Ruchita
+# 1990: What.justification.was.provided.for.choice.of.parameters.to.calibrate. =="" - Yunfei
 
 # B.1.4. How many parameters were calibrated?
-table(raw_data_V3$How.many.parameters.were.calibrated.)
+table(Covidence_raw_data_1cal_V3$How.many.parameters.were.calibrated.)
+
 
 # B.2.2. Resolution of data used for defining calibration targets
-table(raw_data_V3$Resolution.of.data..used.for.defining.calibration.targets)
+table(Covidence_raw_data_1cal_V3$Resolution.of.data..used.for.defining.calibration.targets)
 
 #  B.2.3.  How many calibration targets were used for estimation?
-table(raw_data_V3$How.many.calibration.targets.were.used.for.estimation.)
+table(Covidence_raw_data_1cal_V3$How.many.calibration.targets.were.used.for.estimation.)
 
 # C.1. Number of steps 
-table(raw_data_V3$Number.of.steps..single.or.sequential.)
+table(Covidence_raw_data_1cal_V3$Number.of.steps..single.or.sequential.)
 
 # C.2. Name of calibration algorithm 
-table(raw_data_V3$Name.of.calibration.algorithm)
+table(Covidence_raw_data_1cal_V3$Name.of.calibration.algorithm)
+Covidence_raw_data_1cal_V3  |> 
+  filter(Name.of.calibration.algorithm =="Other: ")|> 
+  pull(Covidence..)
+# 842: Name.of.calibration.algorithm was left empty- Ruchita Balasubramanian
 
 # C.3. Is calibration implementation (code) available in an open-access repository? 
-table(raw_data_V3$Is.calibration.implementation..code..available.in.an.open.access.repository.)
+table(Covidence_raw_data_1cal_V3$Is.calibration.implementation..code..available.in.an.open.access.repository.)
 
 # C.4. Goodness-of-fit (GOF) measure employed within calibration algorithm
-table(raw_data_V3$Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm)
-
+table(Covidence_raw_data_1cal_V3$Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm)
+Covidence_raw_data_1cal_V3  |> 
+  filter(Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm =="Other: ")|> 
+  pull(Covidence..)
+# 1333: Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm was left empty- Yunfei
 
 # C.5. What programming language was used for calibration?
-table(raw_data_V3$What.programming.language.was.used.for.calibration.)
+table(Covidence_raw_data_1cal_V3$What.programming.language.was.used.for.calibration.)
 
 # C.6. Do authors list any programming packages used for calibration?
-table(raw_data_V3$Do.authors.list.any.programming.packages.used.for.calibration.)
+table(Covidence_raw_data_1cal_V3$Do.authors.list.any.programming.packages.used.for.calibration.)
+Covidence_raw_data_1cal_V3  |> 
+  filter(Do.authors.list.any.programming.packages.used.for.calibration. =="Other: ")|> 
+  pull(Covidence..)
+# 1333: Do.authors.list.any.programming.packages.used.for.calibration. was left empty - Yunfei
 
 # D.1. Nature of calibration results
-table(raw_data_V3$Nature.of.calibration.results)
+table(Covidence_raw_data_1cal_V3$Nature.of.calibration.results)
 
 # D.2. How are calibration results reported? 
-table(raw_data_V3$How.are.calibration.results.reported.)
+table(Covidence_raw_data_1cal_V3$How.are.calibration.results.reported.)
 
 # D.3. How is uncertainty in calibration outputs reported? 
-table(raw_data_V3$How.is.uncertainty.in.calibration.outputs.reported.)
-raw_data_V3  |> 
-  filter(How.is.uncertainty.in.calibration.outputs.reported. =="Uncertainty in calibration outputs is not reported.; Other ")|> 
-  pull(Covidence..)
-# 1247 : Multiple calibration
+table(Covidence_raw_data_1cal_V3$How.is.uncertainty.in.calibration.outputs.reported.)
 
 # D.4. What is the size of the calibration output? 
-table(raw_data_V3  |> 
+table(Covidence_raw_data_1cal_V3  |> 
         mutate(size.of.the.calibration.output.reported = ifelse(What.is.the.size.of.the.calibration.output. == "Not reported", "Not reported", "[Number provided]"))|>
         pull(size.of.the.calibration.output.reported))
 
 # If number provided, what is the range of the reported size? 
-raw_data_V3  |> 
+Covidence_raw_data_1cal_V3  |> 
         mutate(size.of.the.calibration.output.reported = ifelse(What.is.the.size.of.the.calibration.output. == "Not reported", "Not reported", "[Number provided]"))|>
         filter(size.of.the.calibration.output.reported != "Not reported")|>
         pull(What.is.the.size.of.the.calibration.output.)
 
 ```
 
+List of things that still need reviewing: 
+
+Lea
+# 1159: Study.setting = "Sub-Saharan Africa" - Is it possibly to provide a list of country names ? If not, please change it to "Sub-Saharan Africa (Country names not reported)".
+
+Ruchita:
+# 842: Name.of.calibration.algorithm was left empty.
+# 842  Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used.
+# 2404: Study.setting = "" - Is it possibly to provide a list of country names ? If not, please change it to "Not reported".
+# 1027 : Study.setting = "sub-Saharan Africa" - Is it possibly to provide a list of country names ? If not, please change it to "sub-Saharan Africa (Country names not reported)".
+# 1254 Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used.
+
+Yunfei : 
+# 2710: Stochasticity.in.model is set to "Both deterministic and stochastic ". - Could you please provide a short explanation for this statement. Are there several models in the study ? Or is one model used for calibration and its equivalent used for simulation ? or other.
+# 2966:External.beliefs.or.evidence was left empty.
+# 2243: External.beliefs.or.evidence was left empty. 
+# 2243: Choice.of.parameters.to.calibrate was left empty.
+# 1628: External.beliefs.or.evidence was left empty.
+# 660: External.beliefs.or.evidence was left empty.
+# 1990: What.justification.was.provided.for.choice.of.parameters.to.calibrate. was left empty.
+# 1333: Do.authors.list.any.programming.packages.used.for.calibration. was left empty.
+# 1333: Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm was left empty.
+#1239 Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used.
+# 2214: Study.setting = "41 sub-Saharan Africa countries" - Is it possibly to provide a list of country names ? If not, please change it to "41 sub-Saharan Africa countries (Country names not reported)".
+# 2193: Study.setting = "Sub-Saharan Africa" - Is it possibly to provide a list of country names ? If not, please change it to "Sub-Saharan Africa (Country names not reported)".
+# 1995 : Study.setting = "Sub-Saharan Africa" - Is it possibly to provide a list of country names ? If not, please change it to "Sub-Saharan Africa (Country names not reported)".
+# 1722: Study.setting = "Sub-Saharan Africa" - Is it possibly to provide a list of country names ? If not, please change it to "Sub-Saharan Africa (Country names not reported)".
+# 831: Study.setting = "South-East Asia region, East Mediterranean region, South , North America region" - Is it possibly to provide a list of country names ? If not, please change it to "South-East Asia region, East Mediterranean region, South , North America region (Country names not reported)".
+
+Emmanuelle
+#2046: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used.
+
+# Clean Column names
+```{r}
+Covidence_raw_data_1cal_V3 <- Covidence_raw_data_1cal_V3 |> rename("Covidence.ID" = "Covidence..")
+colnames(Covidence_raw_data_1cal_V3)[which(grepl("Other",colnames(Covidence_raw_data_1cal_V3)))] <- paste("Other_", colnames(Covidence_raw_data_1cal_V3)[which(grepl("Other",colnames(Covidence_raw_data_1cal_V3)))-1], sep="" )
+colnames(Covidence_raw_data_1cal_V3)[which(grepl("Other",colnames(Covidence_raw_data_1cal_V3)))][5] <- paste("Other_", colnames(Covidence_raw_data_1cal_V3)[which(grepl("Other",colnames(Covidence_raw_data_1cal_V3)))[5]-2], sep="" )
+colnames(Covidence_raw_data_1cal_V3)[which(grepl("clear",colnames(Covidence_raw_data_1cal_V3)))] <- paste("Not_Clear_", colnames(Covidence_raw_data_1cal_V3)[which(grepl("Other",colnames(Covidence_raw_data_1cal_V3)))[5]-2], sep="" )
+```
 
 # Clean "Other" algorithm names
 ```{r}
-# Recode 
+# Make vectors containing all versions of each algorithm's name
 ABC_SMC_names <- c("Approximate Bayesian Computation Sequential Monte Carlo scheme", 
                    "Approximate Bayesian computation with sequential Monte Carlo sampling", 
                    "Approximate Bayesian Computation with Sequential Monte Carlo Sampling", 
-                   "Aproximate Bayesian Computation Sequential Monte Carlo (ABC-SMC) algorithm ")
-
+                   "Aproximate Bayesian Computation Sequential Monte Carlo (ABC-SMC) algorithm ", 
+                   "Approximate Bayesian Computation Sequential Monte Carlo (ABC SMC) method", 
+                   "Approximate Bayesian Computation with Sequential Monte Carlo sampling (ABC-SMC) method")
 HME_names <- c("History matching with emulation", 
                "history matching with model emulation", 
                "history matching with emulation", 
                " history matching with emulation")
-
 IMIS_names <- c("incremental mixture importance sampling", 
                    "Incremental mixture importance sampling", 
                    "Incremental Mixture Importance Sampling", 
@@ -204,90 +272,65 @@ IMIS_names <- c("incremental mixture importance sampling",
                    "Incremental Mixture Importance Sampling (IMIS) ",
                    "a Bayesian framework with incremental mixture importance sampling", 
                    "Incremental Mixture Importance Sampling")
-
 MCF_names <- c("Monte-Carlo filtering", 
                    "Monte-Carlo filtering ", 
                    "Monte Carlo filtering")
-
-
 BM_names <- c("Bayesian melding",
               " Bayesian melding")
-
 NM_names <- c("Iterative, directed-search Nelder-Mead (NM) method", 
-                   "Nelder-Mead algorithm ")
-
+                   "Nelder-Mead algorithm ", 
+              "Nelder-Mead")
 SIR_names <- c("sample-importance-resampling ", 
                "Sampling importance resampling ",
                "Sampling Importance Resampling",
-               "Semi-Bayesian Sampling/Importance-Resampling algorithm")
-
+               "Semi-Bayesian Sampling/Importance-Resampling algorithm", 
+               "Sampling-importance-resampling (SIR) approach")
 SMC_PF_names <- c("sequential Monte Carlo method based on particle filtering", 
                    "sequential Monte Carlo method based on particle filtering",
-                   "Sampling Importance Resampling",
+                   "particle Markov\nchain Monte Carlo (PMCMC",
                    "Sequential Monte Carlo method based on particle filtering known as\nMIF for Likelihood Maximization by Iterated Filtering")
-
 PSPO_names <- c("parallel simultaneous perturbation \noptimisation (PSPO)",
 "parallel simultaneous perturbation optimization ")
 
-
-raw_data_Calibration_Algorithm_other <- raw_data_V3 |>
-  mutate(Other_V2= ifelse(X.Other..details..2 %in% ABC_SMC_names, "Aproximate Bayesian Computation Sequential Monte Carlo (ABC-SMC)", 
-                         ifelse(X.Other..details..2 %in% HME_names, "History matching with emulation",
-                                ifelse(X.Other..details..2 %in% IMIS_names, "Incremental Mixture Importance Sampling (IMIS)", 
-                                       ifelse(X.Other..details..2 %in% MCF_names, "Monte-Carlo filtering", 
-                                              ifelse(X.Other..details..2 %in% SIR_names, "Sampling importance resampling", 
-                                                     ifelse(X.Other..details..2 %in% SMC_PF_names, "Sequential Monte Carlo method based on particle filtering", 
-                                                            ifelse(X.Other..details..2 %in% BM_names, "Bayesian melding", 
-                                                                   ifelse(X.Other..details..2 %in% NM_names, "Nelder-Mead algorithm", 
-                                                                          ifelse(X.Other..details..2 %in% PSPO_names, "Parallel Simultaneous perturbation Optimisation (PSPO)", X.Other..details..2)))))))))) |>
-  rename("Other" = "X.Other..details..2")
-
-
-raw_data_Calibration_Algorithm_other_subset <- raw_data_Calibration_Algorithm_other |>
-  select(Covidence.., Study.ID, Name.of.calibration.algorithm, Other, Other_V2)
-
-# write.csv(raw_data_Calibration_Algorithm_other_subset, "Data_Calibration_Algorithm.csv", row.names = F)
-
-
-raw_data_Calibration_Algorithm_other_subset |>
-  filter(Name.of.calibration.algorithm != "Other ") |>
-  filter(Other !="")|>
-  pull(Covidence..)
-
-raw_data_Calibration_Algorithm_other_subset |>
-  group_by(Other_V2) |>
-  summarise(N=n())  |>
-  arrange(-N)
+# Recode the Other algorithm names with standardized name 
+Covidence_raw_data_1cal_v4 <- Covidence_raw_data_1cal_V3 |>
+  mutate(Other_Name.of.calibration.algorithm_V2= ifelse(Other_Name.of.calibration.algorithm %in% ABC_SMC_names, "Aproximate Bayesian Computation Sequential Monte Carlo (ABC-SMC)", 
+                         ifelse(Other_Name.of.calibration.algorithm %in% HME_names, "History matching with emulation",
+                                ifelse(Other_Name.of.calibration.algorithm %in% IMIS_names, "Incremental Mixture Importance Sampling (IMIS)", 
+                                       ifelse(Other_Name.of.calibration.algorithm %in% MCF_names, "Monte-Carlo filtering", 
+                                              ifelse(Other_Name.of.calibration.algorithm %in% SIR_names, "Sampling importance resampling", 
+                                                     ifelse(Other_Name.of.calibration.algorithm %in% SMC_PF_names, "Sequential Monte Carlo method based on particle filtering", 
+                                                            ifelse(Other_Name.of.calibration.algorithm %in% BM_names, "Bayesian melding", 
+                                                                   ifelse(Other_Name.of.calibration.algorithm %in% NM_names, "Nelder-Mead algorithm", 
+                                                                          ifelse(Other_Name.of.calibration.algorithm %in% PSPO_names, "Parallel Simultaneous perturbation Optimisation (PSPO)", Other_Name.of.calibration.algorithm))))))))))
 ```
 
+```{r}
+# Among those that fall into pre-defined calibration algorithm, 
+# Are there any with information in "Other" as well ? 
+table(Covidence_raw_data_1cal_v4 |>
+  filter(Name.of.calibration.algorithm != "Other ") |>
+  pull(Other_Name.of.calibration.algorithm))
+# yes, which ? 
+Covidence_raw_data_1cal_v4 |>
+  filter(Name.of.calibration.algorithm != "Other ", 
+         Other_Name.of.calibration.algorithm != "") |>
+  pull(Covidence.ID)
+
+# Among those that do not fall into pre-defined calibration algorithm, 
+# Which are the main other categories ? 
+Covidence_raw_data_1cal_v4 |>
+  filter(Name.of.calibration.algorithm == "Other ")|>
+  group_by(Other_Name.of.calibration.algorithm_V2) |>
+  summarise(N=n())  |>
+  arrange(-N)
+
+# write.csv(Covidence_raw_data_1cal_v4 |> select(Covidence.ID, Study.ID, Name.of.calibration.algorithm, Other_Name.of.calibration.algorithm, Other_Name.of.calibration.algorithm_V2), "Data_Calibration_Algorithm.csv", row.names = F)
+```
 
 # Create clean data file for analysis
 ```{r}
-# write.csv(raw_data_V3, "Clean_data_review.csv", row.names = F)
-
+# write.csv(Covidence_raw_data_1cal_v4, "Clean_data_review.csv", row.names = F)
 ```
 
 
-List of things that still need reviewing: 
-
-
-# 1140: Study.setting = "Southeast Asia" - Lea 
-# 1159: Study.setting = "Sub-Saharan Africa" - Lea 
-# 1239: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. -  Yunfei Li 
-# 805: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. -   Léa Cavalli
-
-Ruchita Balasubramanian
-# 1285 : What.justification.was.provided.for.choice.of.parameters.to.calibrate. =="Parameters are relevant to question of interest.; Other"
-# 3251: Study.setting = "105 LMICs" - Is it possibly to provide a list of country names ? If not, please change it to "105 LMICs (Country names not reported)".
-# 1099: Study.setting = "sub-Saharan Africa" - Is it possibly to provide a list of country names ? If not, please change it to "Sub-Saharan Africa (Country names not reported)".
-# 2007 : Study.setting = ""  - Is it possibly to provide a list of country names ? If not, please change it to "Not reported".
-# 2285: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section.- Please choose one or the other, or provide a reason why both are used.
-# 2155: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used. 
-# 2058: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used. 
-# 1501: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used. 
-# 1254: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used.
-# 3251: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used.   
-# 1227: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used. 
-# 1185: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used.  
-# 883: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used. 
-# 842: Has both a calibration name selected in "Name of Calibration Algorithm", and information input in the "Other" section. - Please choose one or the other, or provide a reason why both are used. 

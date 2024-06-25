@@ -1,0 +1,99 @@
+---
+title: "Objective 1 - Figures"
+output: html_document
+date: "2024-06-25"
+---
+
+# Set up environment
+```{r}
+# Clean environment
+rm( list = ls() )
+
+# load necessary libraries
+library(tidyverse)
+
+# Load data
+setwd("~/GitHub/Calibration-Review")
+clean_data <- read.csv("Clean_data.csv")
+```
+
+```{r}
+# If number provided, what is the range of the reported size? 
+Calibration_size_range <- clean_data |> 
+  mutate(size.of.the.calibration.output.reported = ifelse(What.is.the.size.of.the.calibration.output. == "Not reported", "Not reported", "[Number provided]"))|>
+  filter(size.of.the.calibration.output.reported != "Not reported") |> 
+  mutate(What.is.the.size.of.the.calibration.output.V2= as.numeric(str_replace(What.is.the.size.of.the.calibration.output., ",", "")))
+
+# Number of point estimates
+Calibration_size_range |> 
+  group_by(Name.of.calibration.algorithm) |> 
+  summarise(N_point_estimate= sum(Nature.of.calibration.results == "Point estimate (single parameter / parameter set)"))
+
+
+# Range of calibration size among those that were not point estimates
+Calibration_size_range |> 
+  filter(Nature.of.calibration.results != "Point estimate (single parameter / parameter set)") |> 
+  group_by(Name.of.calibration.algorithm) |> 
+  summarise(size_min= min(What.is.the.size.of.the.calibration.output.), 
+            size_max= max(What.is.the.size.of.the.calibration.output.))
+
+Calibration_size_range |> 
+  group_by(Name.of.calibration.algorithm) |> 
+  summarise(size_min= min(What.is.the.size.of.the.calibration.output.), 
+            size_max= max(What.is.the.size.of.the.calibration.output.))
+
+Calibration_size_range |>
+  ggplot() +
+  geom_histogram(aes(x=What.is.the.size.of.the.calibration.output.))+
+  theme_classic()+
+  facet_grid(Name.of.calibration.algorithm ~ .)+
+  xlab("Size of calibration output")
+
+Calibration_size_range |> 
+  group_by(Name.of.calibration.algorithm) |> 
+  summarise(size_min= min(What.is.the.size.of.the.calibration.output.), 
+            size_max= max(What.is.the.size.of.the.calibration.output.))|> 
+  filter(Name.of.calibration.algorithm != "Other ")|> 
+  ggplot()+ 
+  geom_errorbar(aes(x=Name.of.calibration.algorithm, 
+                            ymin= size_min , 
+                            ymax= size_max), width=0.2) + 
+    theme_classic()+
+  coord_flip()+
+  xlab("Name of calibration algorithm")
+
+
+# Chord diagram for association between two categorical variables
+# install.packages("circlize")
+library(circlize)
+# Disease Type and calibration algorithm
+clean_data |> 
+  select(Disease.type..choose.all.that.apply., Name.of.calibration.algorithm) |> 
+  mutate(Name.of.calibration.algorithm= ifelse(Name.of.calibration.algorithm=="Approximate Bayesian Computation", "ABC",
+                                               ifelse(Name.of.calibration.algorithm=="Maximum likelihood estimation", "MLE", 
+                                                      ifelse(Name.of.calibration.algorithm=="Least squares estimation", "LSE", 
+                                                             ifelse(Name.of.calibration.algorithm=="Manual (hand-tuning)", "Manual", 
+                                                                    ifelse(Name.of.calibration.algorithm=="Markov Chain Monte Carlo", "MCMC", 
+                                                                    Name.of.calibration.algorithm)))))) |> 
+  mutate( Name.of.calibration.algorithm==factor(Name.of.calibration.algorithm, levels= c("MCMC", "ABC", "MLE", "LSE", "Manual", "Other", "Not Reported")))|> 
+  chordDiagram()
+
+
+# # Calibration algorithm and nature of the output
+# clean_data |> 
+#   select(Nature.of.calibration.results, Name.of.calibration.algorithm) |> 
+#   mutate(Name.of.calibration.algorithm= ifelse(Name.of.calibration.algorithm=="Approximate Bayesian Computation", "ABC",
+#                                                ifelse(Name.of.calibration.algorithm=="Maximum likelihood estimation", "MLE", 
+#                                                       ifelse(Name.of.calibration.algorithm=="Least squares estimation", "LSE", 
+#                                                              ifelse(Name.of.calibration.algorithm=="Manual (hand-tuning)", "Manual", 
+#                                                                     ifelse(Name.of.calibration.algorithm=="Markov Chain Monte Carlo", "MCMC", 
+#                                                                     Name.of.calibration.algorithm)))))) |> 
+#   mutate( Name.of.calibration.algorithm==factor(Name.of.calibration.algorithm, levels= c("MCMC", "ABC", "MLE", "LSE", "Manual", "Other", "Not Reported")))|> 
+#   mutate(Nature.of.calibration.results= ifelse(Nature.of.calibration.results=="Distribution estimate (a distribution function which generates parameter values)", "Distribution",
+#                                                ifelse(Nature.of.calibration.results=="Point estimate (single parameter / parameter set)", "Point estimate", 
+#                                                       ifelse(Nature.of.calibration.results=="Sample estimate (multiple parameter sets)", "Sample",  Nature.of.calibration.results)))) |> 
+#     mutate( Nature.of.calibration.results==factor(Nature.of.calibration.results, levels= c("Point estimate", "Sample", "Distribution",  "Not Reported")))|> 
+# chordDiagram()
+
+
+```

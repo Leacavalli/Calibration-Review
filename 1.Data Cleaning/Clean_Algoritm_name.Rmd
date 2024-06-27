@@ -14,7 +14,7 @@ rm( list = ls() )
 library(tidyverse)
 
 # Load covidence raw data
-setwd("~/GitHub/Calibration-Review")
+setwd("~/GitHub/Calibration-Review/1.Data Cleaning")
 Data_Calibration_Algorithm <- read.csv("Clean_data.csv")
 ```
 
@@ -86,11 +86,26 @@ Data_Calibration_Algorithm_v2 |>
 
 # Among those that do not fall into pre-defined calibration algorithm, 
 # Which are the main other categories ? 
-Data_Calibration_Algorithm_v2 |>
+df_1 <- Data_Calibration_Algorithm_v2 |>
+  filter(Name.of.calibration.algorithm != "Other ")|>
+  group_by(Name.of.calibration.algorithm) |>
+  summarise(N=n())  |>
+  arrange(-N)|>
+  mutate(Category= "Pre-defined")
+
+# Among those that do not fall into pre-defined calibration algorithm, 
+# Which are the main other categories ? 
+df_2 <- Data_Calibration_Algorithm_v2 |>
   filter(Name.of.calibration.algorithm == "Other ")|>
   group_by(Other_Name.of.calibration.algorithm_V2) |>
   summarise(N=n())  |>
-  arrange(-N)
+  arrange(-N)|>
+  rename("Name.of.calibration.algorithm"="Other_Name.of.calibration.algorithm_V2")|>
+  mutate(Category= "Other")
+
+# write file
+setwd("~/GitHub/Calibration-Review/1.Data Cleaning")
+write.csv(rbind(df_1, df_2), "Counts_Calibration_Algorithm.csv", row.names = F)
 ```
 
 # Write the new file 

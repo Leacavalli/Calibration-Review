@@ -18,173 +18,112 @@ setwd("~/GitHub/Calibration-Review/1.Data Cleaning")
 clean_data <- read.csv("Clean_data.csv")
 
 # Calibration_size_range
-Calibration_size_range <- clean_data |> 
+Calibration_size_range <- clean_data |>
+  separate_rows(What.is.the.size.of.the.calibration.output., Name.of.calibration.algorithm, sep = "; ")|> 
   mutate(size.of.the.calibration.output.reported = ifelse(What.is.the.size.of.the.calibration.output. == "Not reported", "Not reported", "[Number provided]"))|>
   filter(size.of.the.calibration.output.reported != "Not reported") |> 
-  mutate(What.is.the.size.of.the.calibration.output.V2= as.numeric(str_replace_all(What.is.the.size.of.the.calibration.output., ",", "")))
+  mutate(What.is.the.size.of.the.calibration.output.V2= as.numeric(What.is.the.size.of.the.calibration.output.))|> 
+  filter( ! is.na(What.is.the.size.of.the.calibration.output.V2))
 
 # Ask Emmanuelle 
 Calibration_size_range |> 
-  filter(is.na(What.is.the.size.of.the.calibration.output.V2))|> 
-  select(Covidence.ID , Name.of.calibration.algorithm, Nature.of.calibration.results, Other_Nature.of.calibration.results, Number.of.steps..single.or.sequential., Other_Name.of.calibration.algorithm, What.is.the.size.of.the.calibration.output.)
+  filter( is.na(What.is.the.size.of.the.calibration.output.V2))|>
+  select(What.is.the.size.of.the.calibration.output.)
 
-# Recode 
-Calibration_size_range_v2 <-  Calibration_size_range |>
-  select(Name.of.calibration.algorithm, Other_Name.of.calibration.algorithm, Nature.of.calibration.results, What.is.the.size.of.the.calibration.output.V2)|> 
-  filter( ! is.na(What.is.the.size.of.the.calibration.output.V2))
-add_back <- data.frame(Name.of.calibration.algorithm =c("Other ", "MCMC", "Other ", "MCMC", "Other ", "Other ", "Least squares estimation", "Least squares estimation"), 
-            Other_Name.of.calibration.algorithm =c("GWO", "", "GWO", "", "NM", "IMIS", "", ""), 
-            Nature.of.calibration.results = c("Point estimate (single parameter / parameter set)", "Distribution estimate (a distribution function which generates parameter values)", "Point estimate (single parameter / parameter set)", "Distribution estimate (a distribution function which generates parameter values)", "Point estimate (single parameter / parameter set)", "Sample estimate (multiple parameter sets)", "Sample estimate (multiple parameter sets)", "Sample estimate (multiple parameter sets)"), 
-            What.is.the.size.of.the.calibration.output.V2 = c(1, "Not reported", 1, "Not reported", 1, 300, 10000, 5000))
-Calibration_size_range_v3 <- rbind(Calibration_size_range_v2, add_back)|>
-  filter(What.is.the.size.of.the.calibration.output.V2 != "Not reported") |> 
-  mutate(What.is.the.size.of.the.calibration.output.V2= as.numeric(What.is.the.size.of.the.calibration.output.V2))
 ```
-
-# Clean
-# # Classified as "Point estimate", but Calibration size >1. Please either rectify the Nature of calibration results, or set Calibration size to 1.
-# Calibration_size_range |>
-#   filter(Nature.of.calibration.results == "Point estimate (single parameter / parameter set)") |>
-#   filter(What.is.the.size.of.the.calibration.output.V2 != 1)|>
-#   select(Covidence.ID)
-# 
-# # Classified as "Sample" or "Distribution" estimate, but Calibration size is set to 1. Please rectify or provide an explanation.
-# Calibration_size_range |>
-#   filter(Nature.of.calibration.results != "Point estimate (single parameter / parameter set)") |>
-#   filter(What.is.the.size.of.the.calibration.output.V2 == 1)|>
-#   select(Covidence.ID)
-# 
-# # Calibration algoritm is "Maximum likelihood estimation", but Calibration size is > 1. Please rectify or provide an explanation. 
-# Calibration_size_range |>
-#   filter(Nature.of.calibration.results != "Point estimate (single parameter / parameter set)") |>
-#   filter(Name.of.calibration.algorithm == "Maximum likelihood estimation")|>
-#   select(Covidence.ID)
-
-
-# Calibration size 
-## Point Estimates
+# Calibration size Distribution
 ```{r}
-# Calibration algoritm is "Maximum likelihood estimation", but Calibration size is > 1. Please rectify or provide an explanation.
+## Histogram - Name.of.calibration.algorithm 
+subset <- Calibration_size_range|>
+  filter(Name.of.calibration.algorithm != "Other ")|> 
+  filter(Name.of.calibration.algorithm != "Not reported") |>
+  group_by(Name.of.calibration.algorithm)|>
+  summarise(algorithm_N= n())|>
+  filter(algorithm_N>1) |>
+  arrange(-algorithm_N)|> 
+  pull(Name.of.calibration.algorithm) 
+
 Calibration_size_range |>
-  filter(Nature.of.calibration.results != "Point estimate (single parameter / parameter set)") |>
-  filter(Name.of.calibration.algorithm == "Maximum likelihood estimation")|>
-  select(Covidence.ID, Nature.of.calibration.results)
-
-# Number of point estimates
-size_pt_est <- Calibration_size_range_v3 |> 
-  group_by(Name.of.calibration.algorithm) |> 
-  summarise(N= sum(Nature.of.calibration.results == "Point estimate (single parameter / parameter set)"), 
-            prop= paste0("(",round(100*mean(Nature.of.calibration.results == "Point estimate (single parameter / parameter set)")), "%)"))
-size_pt_est
-
-# Plot Number of point estimates
-Calibration_size_range_v3 |>
-  filter(Nature.of.calibration.results == "Point estimate (single parameter / parameter set)") |> 
+  filter(Name.of.calibration.algorithm %in% subset)|>
+  mutate(Name.of.calibration.algorithm = factor(Name.of.calibration.algorithm, levels=subset))|> 
+  mutate(Nature.of.calibration.results = ifelse(grepl("Point", Nature.of.calibration.results), "Point estimate", 
+                                                ifelse(grepl("Sample", Nature.of.calibration.results), "Sample estimate", 
+                                                       ifelse(grepl("Distribution", Nature.of.calibration.results), "Distribution estimate", Nature.of.calibration.results))))|> 
+  mutate(Nature.of.calibration.results = factor(Nature.of.calibration.results, levels = c("Point estimate", "Sample estimate", "Distribution estimate", "Not reported ")))|> 
   ggplot() +
-  geom_histogram(aes(x=What.is.the.size.of.the.calibration.output.V2))+
-  theme_classic()+
-  facet_grid(Name.of.calibration.algorithm ~ .)+
-  xlab("Size of calibration output")
-```
-
-## Sample and Distribution Estimates
-
-```{r}
-# Range of calibration size among those that were not point estimates
-Calibration_size_range_v3 |> 
-  filter(Nature.of.calibration.results != "Point estimate (single parameter / parameter set)") |> 
-  group_by(Name.of.calibration.algorithm) |> 
-  summarise(size_min= min(What.is.the.size.of.the.calibration.output.V2, na.rm=T), 
-            size_max= max(What.is.the.size.of.the.calibration.output.V2, na.rm=T))
-
-## Density plot 
-Calibration_size_range_v3 |>
-  filter(Nature.of.calibration.results != "Point estimate (single parameter / parameter set)") |> 
-  filter(Name.of.calibration.algorithm != "Other ")|> 
-  filter(Name.of.calibration.algorithm != "Not reported") |> 
-  ggplot() +
-  geom_density(aes(x=What.is.the.size.of.the.calibration.output.V2), fill="lightblue3", alpha=0.5)+
+  geom_histogram(aes(x=What.is.the.size.of.the.calibration.output.V2, fill=Nature.of.calibration.results))+
+  scale_x_log10(breaks= c(1, 10, 100, 1000, 10000, 100000, 500000)) + 
   theme_bw()+
-  facet_grid(. ~ Name.of.calibration.algorithm, scales="free_x")+
-  xlab("Size of calibration output")
+  facet_grid(Name.of.calibration.algorithm ~ ., scales = "free",labeller=label_wrap_gen(width=.1))+
+  xlab("Size of calibration output")+
+  labs(fill = "Nature of calibration results") 
 
-## Histogram 
-Calibration_size_range_v3 |>
-  filter(Nature.of.calibration.results != "Point estimate (single parameter / parameter set)") |> 
-  filter(Name.of.calibration.algorithm != "Other ")|> 
-  filter(Name.of.calibration.algorithm != "Not reported") |>
+## Histogram - Name.of.calibration.algorithm 
+Calibration_size_range |>
+  filter(! is.na(Aim.of.calibration.procedure))|> 
+  filter(Aim.of.calibration.procedure != "Not reported")|> 
+  mutate(Nature.of.calibration.results = ifelse(grepl("Point", Nature.of.calibration.results), "Point estimate", 
+                                                ifelse(grepl("Sample", Nature.of.calibration.results), "Sample estimate", 
+                                                       ifelse(grepl("Distribution", Nature.of.calibration.results), "Distribution estimate", Nature.of.calibration.results))))|> 
+  mutate(Nature.of.calibration.results = factor(Nature.of.calibration.results, levels = c("Point estimate", "Sample estimate", "Distribution estimate", "Not reported ")))|> 
   ggplot() +
-  geom_histogram(aes(x=What.is.the.size.of.the.calibration.output.V2), fill="blue4")+
+  geom_histogram(aes(x=What.is.the.size.of.the.calibration.output.V2, fill=Nature.of.calibration.results))+
+  scale_x_log10(breaks= c(1, 10, 100, 1000, 10000, 100000, 500000)) + 
   theme_bw()+
-  facet_grid(. ~ Name.of.calibration.algorithm, scales="free_x")+
-  xlab("Size of calibration output")
+  facet_grid(Aim.of.calibration.procedure ~ ., scales = "free",labeller=label_wrap_gen(width=.1))+
+  xlab("Size of calibration output")+
+  labs(fill = "Nature of calibration results")
 
-## Range 
-Calibration_size_range_v3 |> 
-  filter(Nature.of.calibration.results != "Point estimate (single parameter / parameter set)") |>
-  filter(Name.of.calibration.algorithm != "Other ")|> 
-  filter(Name.of.calibration.algorithm != "Not reported") |>
-  group_by(Name.of.calibration.algorithm) |> 
-  summarise(size_min= min(What.is.the.size.of.the.calibration.output.V2, na.rm=T), 
-            size_max= max(What.is.the.size.of.the.calibration.output.V2, na.rm=T))|> 
-  ggplot()+ 
-  geom_errorbar(aes(x=Name.of.calibration.algorithm, 
-                            ymin= size_min , 
-                            ymax= size_max), width=0.2) + 
-    theme_classic()+
-  coord_flip()+
-  xlab("Name of calibration algorithm")
 ```
 
 
 
-# Association between disease and algorithm
+# Association between disease and algorithm AIM
 ```{r}
-
 library(cartography)
-# Format data
-data_disease_algo <- clean_data |> 
-  filter(Name.of.calibration.algorithm != "Other ")|> 
-  filter(Name.of.calibration.algorithm != "Not reported") |>
-  select(Disease.type..choose.all.that.apply., Name.of.calibration.algorithm) |> 
-  mutate(Name.of.calibration.algorithm= ifelse(Name.of.calibration.algorithm=="Approximate Bayesian Computation", "ABC",
-                                               ifelse(Name.of.calibration.algorithm=="Maximum likelihood estimation", "MLE", 
-                                                      ifelse(Name.of.calibration.algorithm=="Least squares estimation", "LSE", 
-                                                             ifelse(Name.of.calibration.algorithm=="Manual (hand-tuning)", "Manual", 
-                                                                    ifelse(Name.of.calibration.algorithm=="Markov Chain Monte Carlo", "MCMC", 
-                                                                    Name.of.calibration.algorithm)))))) |> 
-  mutate( Name.of.calibration.algorithm= factor(Name.of.calibration.algorithm, levels= c("MCMC", "ABC", "MLE", "LSE", "Manual", "Other", "Not Reported")))
-
+                                                                    
 # chordDiagram
 # install.packages("circlize")
 library(circlize)
-data_disease_algo |> 
-  chordDiagram(grid.col = carto.pal(pal1 = "pastel.pal" ,n1 = 9))
-  
-# Barplot - Counts
-data_disease_algo |> 
-  ggplot(aes(x=Name.of.calibration.algorithm, fill = Name.of.calibration.algorithm))+
-  geom_bar() +
-  facet_grid(Disease.type..choose.all.that.apply.~.)+
-  theme_classic() +
-  xlab("Name of calibration algorithm") +
-  ylab("Count") +
-  labs(fill = "Name of calibration algorithm") +
-  scale_fill_manual(values = carto.pal(pal1 = "pastel.pal" ,n1 = 5))
+clean_data |> 
+  separate_rows(Disease.type..choose.all.that.apply., sep = "; ")|> 
+  select(Aim.of.calibration.procedure,  Disease.type..choose.all.that.apply.)|>
+  chordDiagram(grid.col = carto.pal(pal1 = "pastel.pal" ,n1 = 6))
 
 # Barplot - Proportion stacked
-data_disease_algo|>
-  group_by(Name.of.calibration.algorithm, Disease.type..choose.all.that.apply.) |>
+clean_data|> 
+  separate_rows(Disease.type..choose.all.that.apply., sep = "; ")|>
+  group_by(Aim.of.calibration.procedure, Disease.type..choose.all.that.apply.) |>
   summarise(Count = n(), .groups = 'drop') |>
   group_by(Disease.type..choose.all.that.apply.) |>
   mutate(Proportion = Count / sum(Count)) |>
-  ggplot(aes(x=Disease.type..choose.all.that.apply., y = Proportion, fill = Name.of.calibration.algorithm)) +
+  ggplot(aes(x=Disease.type..choose.all.that.apply., y = Proportion, fill = Aim.of.calibration.procedure)) +
   geom_bar(stat = "identity", position = "fill") +
   theme_classic() +
-  xlab("Name of calibration algorithm") +
+  xlab("Aim of calibration algorithm") +
   ylab("Proportion") +
-  labs(fill = "Name of calibration algorithm") +
+  labs(fill = "Aim of calibration algorithm") +
   scale_fill_manual(values = carto.pal(pal1 = "pastel.pal" ,n1 = 5))
 
+```
+# Association between disease and algorithm FAMILY
+```{r}
+# Barplot - count
+clean_data |> 
+    separate_rows(Calibration.algorithm.Family, sep = "; ")|> 
+    separate_rows(Disease.type..choose.all.that.apply., sep = "; ") |>
+  mutate(
+    Calibration.algorithm.Family = fct_infreq(Calibration.algorithm.Family),  
+    Calibration.algorithm.Family = fct_relevel(Calibration.algorithm.Family, 
+                                               c("Other ", "Not reported"), after = Inf))  |> 
+  ggplot(aes(x=Calibration.algorithm.Family, fill = Aim.of.calibration.procedure))+
+  geom_bar() +
+     facet_grid(Disease.type..choose.all.that.apply.~.)+
+     theme_classic() +
+     xlab("Calibration algorithm family") +
+     ylab("Count") +
+     labs(fill = "Aim of calibration algorithm") +
+     theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  scale_fill_manual(values = carto.pal(pal1 = "pastel.pal" ,n1 = 5))
 ```
 

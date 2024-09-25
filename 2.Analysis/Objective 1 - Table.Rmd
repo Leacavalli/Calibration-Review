@@ -14,7 +14,7 @@ rm( list = ls() )
 library(tidyverse)
 
 # Load data
-setwd("~/GitHub/Calibration-Review")
+setwd("~/GitHub/Calibration-Review/1.Data Cleaning")
 clean_data <- read.csv("Clean_data.csv")
 ```
 
@@ -206,7 +206,7 @@ for(i in 1: length(B.2.1_Options)){
   summarise(Count=sum(Count),            
             Percentage= sum(Percentage))|> 
   mutate(Options =B.2.1_Options[i], .before = Count)|> 
-  mutate(Field= "B.1.3. What justification was provided for choice of parameters to calibrate? Only for studies which calibrated a subset of parameters.", .before = Options)
+  mutate(Field= "B.2.1. Type of data used for defining calibration targets", .before = Options)
   
 }
 
@@ -257,8 +257,14 @@ df_C.1 <- clean_data |>
 
 
 # C.2. Name of calibration algorithm 
+ordered_Name.of.calibration.algorithm <- clean_data |>
+  filter(! Name.of.calibration.algorithm %in% c( "Not reported", "Other "))|>
+  group_by(Name.of.calibration.algorithm)|>
+  summarise(N=n())|>
+  arrange(-N)|>
+  pull(Name.of.calibration.algorithm)
 df_C.2 <- clean_data |> 
-    mutate(Name.of.calibration.algorithm = factor(Name.of.calibration.algorithm, levels= c("Markov Chain Monte Carlo", "Approximate Bayesian Computation", "Maximum likelihood estimation", "Least squares estimation",  "Manual (hand-tuning)", "Not reported", "Other " )))|> 
+    mutate(Name.of.calibration.algorithm = factor(Name.of.calibration.algorithm, levels= c(ordered_Name.of.calibration.algorithm, "Not reported", "Other " )))|> 
 group_by(Name.of.calibration.algorithm) |>
   summarise(Count=n(), 
             Percentage= 100*round(Count/nrow(clean_data), 3))|> 
@@ -345,7 +351,7 @@ for(i in 1: length(D.2_Options)){
   summarise(Count=sum(Count),            
             Percentage= sum(Percentage))|> 
   mutate(Options =D.2_Options[i], .before = Count)|> 
-  mutate(Field= "D.2. What programming language was used for calibration?", .before = Options)
+  mutate(Field= "D.2. How are calibration results reported?", .before = Options)
 }
 
 
@@ -366,7 +372,7 @@ for(i in 1: length(D.3_Options)){
   summarise(Count=sum(Count),            
             Percentage= sum(Percentage))|> 
   mutate(Options =D.3_Options[i], .before = Count)|> 
-  mutate(Field= "D.3. What programming language was used for calibration?", .before = Options)
+  mutate(Field= "D.3. How is uncertainty in calibration outputs reported?", .before = Options)
 }
 
 
@@ -393,12 +399,13 @@ Objective1_df <- rbind(df_0.1, df_0.2, df_0.3, df_0.4,
 
 Objective1_df
 ```
+
+# Write a file
 ```{r}
-# Write a file 
 library(xlsx)
-setwd("~/GitHub/Calibration-Review")
-write.xlsx(as.data.frame(Objective1_df), file="Data_extraction_sheet.xlsx",
-  sheetName = "Summaries", append=TRUE , row.names = F, col.names = T)
+setwd("~/GitHub/Calibration-Review/3.Results")
+write.xlsx(as.data.frame(Objective1_df), file="Table2.xlsx",
+  sheetName = "Table 2", append=TRUE , row.names = F, col.names = T)
 ```
 
 

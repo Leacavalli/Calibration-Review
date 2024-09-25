@@ -1,0 +1,107 @@
+---
+title: "Objective 2 - Figures"
+output: html_document
+date: "2024-09-06"
+---
+
+# Set up environment
+```{r}
+# Clean environment
+rm( list = ls() )
+
+# load necessary libraries
+library(tidyverse)
+library(circlize)
+library(cartography)
+
+# Load data
+setwd("~/GitHub/Calibration-Review/1.Data Cleaning")
+clean_data <- read.csv("Clean_data.csv")
+```
+
+# Objective 2a: Plot Aim vs Model type
+```{r}
+# chordDiagram
+# install.packages("circlize")
+clean_data |> 
+  select(Aim.of.calibration.procedure, Model.type) |> 
+  chordDiagram()
+  
+# Barplot - Counts
+clean_data |> 
+  mutate(Model.type = factor(Model.type, levels= rev(c("Compartmental", "Individual-based", "Hawkes Process", "Other", "Not reported"))))|>
+  ggplot(aes(x=Aim.of.calibration.procedure, fill = Model.type))+
+  geom_bar() +
+  theme_classic() +
+  xlab("Aim of calibration algorithm") +
+  ylab("Count") +
+  labs(fill = "Model type") +
+  scale_fill_manual(values = carto.pal(pal1 = "pastel.pal" ,n1 = 15)[c(10:14)])
+
+# Barplot - Proportions
+clean_data |> 
+  mutate(Model.type = factor(Model.type, levels= rev(c("Compartmental", "Individual-based", "Hawkes Process", "Other", "Not reported"))))|>
+  ggplot(aes(x=Aim.of.calibration.procedure, fill = Model.type))+
+  geom_bar(position = "fill") +
+  theme_classic() +
+  xlab("Aim of calibration algorithm") +
+  ylab("Proportion") +
+  labs(fill = "Model type") +
+  scale_fill_manual(values = carto.pal(pal1 = "pastel.pal" ,n1 = 15)[c(10:14)])
+
+```
+
+# Objective 2b: Plot Aim vs Data type
+```{r}
+# Barplot - Proportions
+clean_data |>
+  select(Aim.of.calibration.procedure, Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.)|>
+  separate_rows(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply., sep = "; ")|>
+  mutate(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply. = fct_infreq(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.),
+         Type.of.data.used.for.defining.calibration.targets..select.all.that.apply. = fct_relevel(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply., 
+                                               c("Other", "Not reported "), after = Inf)|>  fct_rev()) |> 
+  ggplot(aes(x=Aim.of.calibration.procedure, fill = Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.))+
+  geom_bar(position = "fill") +
+  theme_classic() +
+  xlab("Aim of calibration algorithm") +
+  ylab("Count") +
+  labs(fill = "Type of data used to define calibration targets") +
+  scale_fill_manual(values = carto.pal(pal1 = "pastel.pal" ,n1 = 16)[16:1])
+
+```
+
+# Objective 2c: Plot Aim vs Data Resolution
+```{r}
+# chordDiagram
+# clean_data |> 
+#   select(calibration_algorithm_aim, Resolution.of.data..used.for.defining.calibration.targets) |> 
+#   chordDiagram()
+  
+# Barplot - Counts
+clean_data |> 
+  mutate(Resolution_of_data= ifelse(Resolution.of.data..used.for.defining.calibration.targets=="Empirical data or statistical summaries of empirical data (e.g., WHO case notification data) ", "Empirical data", 
+                                    ifelse(Resolution.of.data..used.for.defining.calibration.targets=="Modeled estimates  (e.g., WHO TB incidence estimates)", "Modeled estimates", 
+                                           ifelse(Resolution.of.data..used.for.defining.calibration.targets=="Not reported ", "Not reported", "Both empirical data and modeled estimates"))))|>
+  mutate(Resolution_of_data= factor(Resolution_of_data, levels= rev(c("Empirical data", "Modeled estimates", "Both empirical data and modeled estimates", "Not reported"))))|>
+  ggplot(aes(x=Aim.of.calibration.procedure, fill = Resolution_of_data))+
+  geom_bar() +
+  theme_classic() +
+  xlab("Aim of calibration algorithm") +
+  ylab("Count") +
+  labs(fill = "Resolution of the data used\nfor defining calibration targets") +
+  scale_fill_manual(values = carto.pal(pal1 = "pastel.pal" ,n1 = 20)[c(16:20)])
+
+# Barplot - Proportions
+clean_data |> 
+  mutate(Resolution_of_data= ifelse(Resolution.of.data..used.for.defining.calibration.targets=="Empirical data or statistical summaries of empirical data (e.g., WHO case notification data) ", "Empirical data", 
+                                    ifelse(Resolution.of.data..used.for.defining.calibration.targets=="Modeled estimates  (e.g., WHO TB incidence estimates)", "Modeled estimates", 
+                                           ifelse(Resolution.of.data..used.for.defining.calibration.targets=="Not reported ", "Not reported", "Both empirical data and modeled estimates"))))|>
+  mutate(Resolution_of_data= factor(Resolution_of_data, levels= rev(c("Empirical data", "Modeled estimates", "Both empirical data and modeled estimates", "Not reported"))))|>
+  ggplot(aes(x=Aim.of.calibration.procedure, fill = Resolution_of_data))+
+  geom_bar(position = "fill") +
+  theme_classic() +
+  xlab("Aim of calibration algorithm") +
+  ylab("Count") +
+  labs(fill = "Resolution of the data used\nfor defining calibration targets") +
+  scale_fill_manual(values = carto.pal(pal1 = "pastel.pal" ,n1 = 20)[c(16:20)])
+```

@@ -1,0 +1,461 @@
+"Covidence.ID","Study.DOI","Name.of.calibration.algorithm","Other_Name.of.calibration.algorithm","Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm","Other_Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm","Not_Clear_Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm","Nature.of.calibration.results","Other_Nature.of.calibration.results"
+3256,"https://doi.org/10.4103/ijmr.ijmr_328_23","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+3251,"https://doi.org/10.1016/S2214-109X(23)00045-1","Least squares estimation",NA,"Not clear",NA,"Once we had obtained 1000 parameter sets that produced output consistent with the calibration targets, we used
+those parameter sets with the mechanistic model to simulate the future (step 3) for each country","Sample estimate (multiple parameter sets)",NA
+3237,"https://doi.org/10.1371/journal.pmed.1004032","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+3233,"https://doi.org/10.1007/s11538-023-01156-1","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+3227,"https://doi.org/10.1038/s41598-019-54561-9","Other ","Semi-Bayesian Sampling/Importance-Resampling algorithm","Other ","Bayes Factor",NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+3222,"https://doi.org/10.1371/journal.pone.0214532","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+3216,"https://doi.org/10.3390/epidemiologia4040036 ","Other ","Method of moments","Not reported",NA,NA,"Not reported ",NA
+3189,"https://doi.org/10.1016/j.jtbi.2019.02.020","Not reported",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+3187,"https://doi.org/10.1007/s11538-022-01019-1","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+3184,"https://doi.org/10.1186/s12879-022-07465-5","Maximum likelihood estimation",NA,"Other "," Chi-square test",NA,"Not reported ",NA
+3123," https://doi.org/
+10.1371/journal.pgph.0000111","Maximum likelihood estimation",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+3115,"https://doi.org/10.1371/journal.pgph.0000784","Approximate Bayesian Computation",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+3106,"https://doi.org/10.1371/journal.pgph.0000474","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+3097,"https://doi.org/10.1016/j.lansea.2022.100097
+","Other ","Monte Carlo filtering","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+3096,"http://doi.org/10.1016/j.idm.2023.11.010","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+3090,"https://doi.org/10.1371%2Fjournal.pgph.0000610","Approximate Bayesian Computation",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+3049,"http://doi.org/10.1097/PHH.0000000000000717","Other ","Latin Hypercube Sampling","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+3047," https://doi.org/
+10.1017/S0950268819001857","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+3034,"https://doi.org/10.1007/s10461-021-03361-2","Other ","Approximate Bayesian Computation Sequential Monte Carlo scheme","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+3014,"https://doi.org/10.1016/j.idm.2018.10.002","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+3009,"https://doi.org/10.1016/j.idm.2018.04.001","Other ","parallel simultaneous perturbation optimization ","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+3008,"https://doi.org/10.1016/j.idm.2018.03.005","Other ","Monte-Carlo filtering ","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2999,"https://doi.org/10.1186/s12916-018-1037-3","Other ","incremental mixture importance sampling (IMIS)","Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+2966,"https://doi.org/10.1371/journal.pcbi.1007083","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2949,"https://doi.org/10.1186/s12916-019-1384-8","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2872,"https://doi.org/10.1371/journal.pone.0242491","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2793,"https://doi.org/10.1016/j.amc.2022.126983","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2756,"10.1002/jia2.25495","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2742,"http://dx.doi.org/10.1136/bmjgh-2020-004292","Least squares estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2740,"https://doi.org/10.1080/23737484.2020.1731724","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+2734,"https://doi.org10.1097/OLQ.0000000000001485
+","Approximate Bayesian Computation",NA,"Not reported",NA,NA,"Not reported ",NA
+2717,"https://doi.org/10.12688/gatesopenres.13278.2","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2710,"https://doi.org/10.1155/2020/4513854","Maximum likelihood estimation",NA,"Other "," Akaike information criterion (AIC) value",NA,"Sample estimate (multiple parameter sets)",NA
+2701,"https://onlinelibrary.wiley.com/doi/10.1002/mma.6979","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2690,"https://doi.org/10.29089/2021.21.00185","Least squares estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2664,"http://dx.doi.org/10.11145/j.biomath.2021.10.029 ","Least squares estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2644,"https://doi.org/10.1080/25742558.2018.1475590","Least squares estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2628,"https://doi.org/10.1080/09540121.2019.1679704","Not reported",NA,"Other ","Parameters were adjusted until the prediction lines best overlapped with lines that reflected the historical surveillance data.",NA,"Not reported ",NA
+2598,"Not reported","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2574,"https://doi.org/10.1080/09540121.2022.2147478","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2561,"https://doi.org/10.1016/S2214-109X(23)00206-1","Other ","the procedure by which 
+the model was calibrated to these data is as follows: the model was run using 50000 parameter sets generated using Latin hypercube sampling in which certain parameters are allowed to vary within defined ranges (appendix p 24); for each parameter set the likelihood of the observed survey data given the corresponding modelled outputs was calculated. The ten parameter sets with the highest likelihood were selected for use in all 
+further model analyses","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2550,"https:/doi.org/10.46481/jnsps.2023.1389","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2542,"https://doi.org/10.58997/ejde.2022.28","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2507,"https://doi.org/10.3346/jkms.2018.33.e59","Least squares estimation",NA,"Not reported",NA,NA,"Not reported ",NA
+2470,"https://doi.org/10.3346/jkms.2022.37.e212","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2441,"https://doi.org/10.1038/s41467-022-28145-7","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2439,"https://doi.org/10.1016/S2542-5196(21)00296-5","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2437,"https://doi.org/10.1038/s41598-022-07536-2","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2431,"https://doi.org/10.1038/s41598-022-10488-2","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2425,"https://doi.org/10.1038/s43856-022-00073-z","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2421,"https://doi.org/10.1038/s41598-022-18135-6","Maximum likelihood estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2412,"https://doi.org/10.1016/j.idm.2022.07.005","Least squares estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2410,"https://doi.org/10.1371/journal.pmed.1004155","Other ","history matching with emulation, ABC-MCMC","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2404,"https://doi.org/10.1038/s41467-023-35939-w","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2393,"https://doi.org/10.1136/bmjgh-2023-012306","Other ","Iterative, directed-search Nelder-Mead (NM) method","Not clear",NA,"The sum of the GoF of the individual calibration targets","Sample estimate (multiple parameter sets)",NA
+2384,"https://doi.org/10.4103/ijcm.ijcm_160_23","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2373,"https://doi.org/10.1093/cid/ciad557","Other ","Sampling Importance Resampling","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2366,"https://doi.org/10.1371/journal.pone.0293519","Other ","sample-importance-resampling ","Other ","we determined if the model performs better than random using a permutation test and second, we compared the global spatial autocorrelation to the data among each resampled parameter set using Global Moran’s I.",NA,"Sample estimate (multiple parameter sets)",NA
+2358,"https://doi.org/10.1140/epjp/s13360-023-04754-z","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2353,"https://doi.org/10.1371/journal.pone.0192282","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2351,"https://doi.org/10.3346/jkms.2018.33.e59","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2346,NA,"Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+2344,"10.1073/pnas.1720606115","Other "," Levemberg–Marquard optimization algorithm ","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2326,"https://doi.org/10.1371%2Fjournal.pcbi.1011931","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2324,"http://dx.doi.org/10.1098/rsos.180887","Markov Chain Monte Carlo",NA,"Other ","Deviance information criterion",NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+2323,"https://doi.org/10.1016/j.vaccine.2018.08.019","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Not reported ",NA
+2318,"https://doi.org/10.1016/j.jtbi.2018.06.001","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2315,"https://doi.org/10.1016/j.chaos.2018.09.039","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2312,"https://doi.org/10.1142/S0218339018500249","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2293,"http://dx.doi.org/10.1098/rsos.180999","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2290," https://doi.org/10.1038/s41598-019-41256-4 ","Markov Chain Monte Carlo",NA,"Other "," R-square, mean absolute error (MAE), and mean absolute percentage error (MAPE)",NA,"Not reported ",NA
+2285,"https://doi.org/10.4103/ijmr.ijmr_1901_18","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2274,"https://doi.org/10.3390/tropicalmed4020071","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2243,"https://doi.org/10.1016/j.apm.2019.07.003","Least squares estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2242,"
+https://doi.org/10.1016/j.matcom.2019.03.012","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2233,"https://doi.org/10.1186/s12916-019-1452-0","Other ","Latin Hypercube Sampling","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2228,"https://doi.org/10.1016/j.cnsns.2019.104920","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2214,"https://doi.org/10.1186/s12889-019-8141-y","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+2213,"https://doi.org/10.1371/journal.pone.0227919","Least squares estimation",NA,"Other ","Akaike Information Criterion ",NA,"Point estimate (single parameter / parameter set)",NA
+2211,"https://doi.org/10.1016/j.mbs.2019.108304","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2205,"
+http://doi.org/10.3934/dcdss.2020055","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2197,"https://doi.org/10.1088/1748-9326/ab7520","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Not reported ",NA
+2193,"https://doi.org/10.1007/s00285-020-01503-z ","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2155,"https://doi.org/10.1371/journal.pmed.1003456","Manual (hand-tuning)",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2137,"https://doi.org/10.1371/journal.pntd.0008736","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2131,"https://doi.org/10.1038/s41598-021-83768-y","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2128,"https://doi.org/10.1186/s12936-021-03653-x","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2122,"https://doi.org/10.1007/s00285-021-01595-1 ","Other "," Grey Wolf Optimizer + MCMC","Other ","Ad-hoc distance function for GWO, Not reported for MCMC",NA,"Other ","Point estimate for GWO, Distribution estimate for MCMC"
+2098,"10.1186/s12936-021-03893-x","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+2093,"10.1016/j.rinp.2021.104739","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2088,"http://dx.doi.org/10.1136/bmjgh-2021-006114","Other "," Bayesian melding","Not reported",NA,NA,"Not reported ",NA
+2084,"https://doi.org/10.1016/j.chaos.2021.111476","Least squares estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2083,"https://doi.org/10.1016/j.matcom.2021.09.021","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2078,"10.1371/journal.pone.0257242","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2061,"https://doi.org/10.1016/j.mbs.2021.108750","Other ","inference on parameter in the Bayesian framework","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2059,"http://doi.org/10.1111/eva.13331","Not reported",NA,"Other ","minimized the Euclidean distance",NA,"Not reported ",NA
+2058,"https://doi.org/10.1186/s12879-022-07067-1","Markov Chain Monte Carlo",NA,"Other ","An AM algorithm adapts continuously to the target distribution.",NA,"Sample estimate (multiple parameter sets)",NA
+2052,"https://doi.org/10.1093/cid/ciac121","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+2048,"https://doi.org/10.1093/ije/dyac045","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+2047,"https://doi.org/10.1186/s13662-022-03700-0","Least squares estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2046,"
+https://doi.org/10.1371/journal.pcbi.1010002","Other ","Two-step calibration: box optimization first, followed by ABC","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2040,"https://doi.org/10.1016/j.jgar.2022.03.018","Least squares estimation",NA,"Other ","Chi-square test",NA,"Point estimate (single parameter / parameter set)",NA
+2039,"https://doi.org/10.1371/journal.pcbi.1010161","Other ","Maximum likelihood estimation, Least squares estimation, Latin hypercube sampling","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2020," https://doi.org/10.3390/
+tropicalmed7100263","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2016,"http://doi.org/10.1142/S0218339022500309","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+2007,"https://doi.org/10.1098/rsos.220685","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+2005,"doi: 10.1016/S2214-109X(22)00416-8","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1995,"https://doi.org/10.1137/21M1464427","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1990,"http://doi.org/10.3934/dcdsb.2023003","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1983,"https://doi.org/10.1002/mma.9160","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1982,"https://doi.org/10.1016/j.epidem.2023.100678 ","Other ","History matching with emulation","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1976,"https://doi.org/10.1186/s12936-023-04564-9","Least squares estimation",NA,"Not reported",NA,NA,"Not reported ",NA
+1970,"https://doi.org/10.1038/s41598-023-33868-8","Other ","sequential Monte Carlo method based on particle filtering","Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1966,"https://doi.org/10.1016/j.lana.2023.100511
+
+","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+1961,"https://doi.org/10.3349/ymj.2022.0624","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1960,"https://doi.org/10.1007/s00285-023-01927-3","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1958,"10.3390/fractalfract7070538 ","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1957,"https://doi.org/10.3390/computation11070146","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1954,"https://doi.org/10.1136/bmjgh-2023-012799","Other "," history matching with emulation","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1953,"https://doi.org/10.1186/s12889-023-16425-w","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+1951,"https://doi.org/10.1186/s12916-023-02785-y","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1949,"https://doi.org/10.3390/axioms12090805","Other ","Grey Wolf Optimizer (GWO)","Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1942,"http://dx.doi.org/10.1136/bmjopen-2022-062123","Other ","Latin Hypercube Sampling","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1937,"https://doi.org/10.1080/17513758.2023.2199766","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+1922,"https://doi.org/10.1016/j.jtbi.2018.01.026","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1919,"https://doi.org/10.1007/s11587-017-0350-z","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1913,"https://doi.org/10.1093%2Faje%2Fkwy094","Other ","Incremental Mixture Importance Sampling","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1902,"https://doi.org/10.1186/s12889-019-6544-4","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1900,"https://doi.org/10.1016/j.jtbi.2018.12.033","Approximate Bayesian Computation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1897,"https://doi.org/10.1016/j.amc.2018.11.001","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1896,"https://www.aimsciences.org/article/doi/10.3934/dcdsb.2019089","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1888,"https://doi.org/10.1016/j.ecoinf.2019.101006","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1873,"https://doi.org/10.1016/j.chaos.2018.09.001","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1871,"https://doi.org/10.1186/s12976-020-00124-9","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1866,"https://doi.org/10.1186/s12889-020-09260-w","Other ","Local sequential quadratic programming (DESQP) optimization algorithm","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1864,"https://doi.org/10.1016/j.ijid.2020.05.082","Markov Chain Monte Carlo",NA,"Other ","mean absolute percentage error",NA,"Sample estimate (multiple parameter sets)",NA
+1863,"https://doi.org/10.1016/j.tmaid.2020.101792","Not reported",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Not reported ",NA
+1861,"https://doi.org/10.1016/j.eclinm.2020.100603","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1859,"https://doi.org/10.1186/s12936-020-03496-y","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1858,"10.1164/rccm.202003-0526OC","Other ","Bayesian evidence synthesis; incremental mixture importance sampling ","Not reported",NA,NA,"Not reported ",NA
+1853,"https://dx.doi.org/10.3390/ijerph18010076 ","Markov Chain Monte Carlo",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1849,"https://doi.org/10.1097/EDE.0000000000001271","Other ","Incremental Mixture Importance Sampling","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1848,"http://dx.doi.org/10.1136/bmjgh-2020-004292","Least squares estimation",NA,"Not reported",NA,NA,"Not reported ",NA
+1847,"https://doi.org/10.2196%2F24830","Other ","Bayesian melding","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1846,"https://doi.org/10.28919/cmbn/6059","Least squares estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1844,"https://doi.org/10.1080/13873954.2021.1881560","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1842,"https://doi.org/10.1007/s12190-020-01469-7","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1838,"https://doi.org/10.1186/s12916-021-01932-7","Other ","Approximate Bayesian Computation Accept-Reject Random sampling (ABC-RS) and Approximate Bayesian Computation Markov Chain Monte Carlo (ABC-MCMC) rejection sampling process","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1836,"https://doi.org/10.3390/vaccines9030245","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1828,"https://doi.org/10.3390/math9080804","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1826,"https://doi.org/10.1186/s12916-021-01968-9","Other ","Incremental Mixture Importance Sampling","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1822,"http://doi.org/0.1177/0272989X211007842","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1799,"https://doi.org/10.1016/j.chaos.2018.09.001","Least squares estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1782,"http://doi.org/10.1016/j.idm.2022.10.005","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1754,"https://doi.org/10.1016/j.idm.2022.06.007","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1751,"https://doi.org/10.1098/rsif.2022.0413","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1747,"https://doi.org/10.1016/j.idm.2022.10.005","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1745,"https://doi.org/10.1186/s40249-022-01046-z","Other ","fourth-order Runge–Kutta method","Other ","R2 and p-values",NA,"Not reported ",NA
+1744,"https://doi.org/10.32604/cmes.2020.08208","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1725,"https://doi.org/10.1371/journal.pone.0230964","Not reported",NA,"Other "," minimizing the error of the number of reported incident data to the model curve",NA,"Point estimate (single parameter / parameter set)",NA
+1722,"https://doi.org/10.1016/j.vaccine.2023.04.011","Other ","Equilibrium values of 10%, 20%, and 40%","Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1718,"http://doi.org/10.3390/computation11070143","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1711,"https://doi.org/10.1186/s12916-023-02992-7","Approximate Bayesian Computation",NA,"Not reported",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1700,"https://doi.org/10.1007/s00285-023-01999-1 ","Other "," Grey Wolf Optimizer + MCMC","Not reported",NA,NA,"Other ","Point estimate for GWO, Distribution estimate for MCMC"
+1673,"https://doi.org/10.1371/journal.pmed.1003535","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1628,"https://doi.org/10.1155/2021/9512371","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1586,"http://dx.doi.org/10.1098/rsif.2018.0025","Other ","Approximate Bayesian Computation and Markov Chain Monte Carlo","Other ","The summary statistic used was the TB incidence from the model falling within the 95% CI for all four TB incidence measures from the data",NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1570,"https://doi.org/10.1177/1687814019854835","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1547,"https://doi.org/10.1186/s13662-021-03448-z","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1545,"https://doi.org/10.1136/bmjgh-2021-005953","Maximum likelihood estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1532,"ttps://doi.org/10.1080/17513758.2022.2096935","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1530,"https://doi.org/10.1109/ACCESS.2023.3248292","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1528,"https://doi.org/10.1186/s12936-023-04563-w","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1524,"10.1016/j.imed.2022.09.001","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1521,"https://doi.org/10.1038/s41467-023-39914-3","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+1501,"https://doi.org/10.1155/2018/9253846","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1466,"https://doi.org/10.1371/journal.pone.0198280","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1421,"https://doi.org/10.1371/journal.pmed.1002737","Other ","Latin Hypercube Sampling","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1407,"http://dx.doi.org/10.1016/S2214-109X(18)30452-2","Other ","two-stage calibration process: manual first, followed by approximate Bayesian computation (ABC)-Markov chain 
+Monte Carlo (MCMC) ","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1405,"https://doi.org/10.1186/s12916-019-1261-5","Other ","Root Mean Squared (RMS) deviation","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1398,"https://doi.org/10.1371/journal.pcbi.1009255","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1393,"https://doi.org/10.1038/s41598-019-39799-7 ","Other ","Bayesian melding","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1392,"http://dx.doi.org/10.1016/ 
+S2214-109X(19)30037-3","Markov Chain Monte Carlo",NA,"Other ","Estimation of the Gelman–Rubin convergence diagnostic",NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1351,"https://www.aimspress.com/article/10.3934/mbe.2019225","Other ","Parametric differential equation","Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1337,"https://doi.org/10.1016/S2214-109X(21)00462-9","Approximate Bayesian Computation",NA,"Other ","Hamiltonian Monte Carlo algorithm",NA,"Sample estimate (multiple parameter sets)",NA
+1333,"https://doi.org/10.1002/sim.9816","Markov Chain Monte Carlo",NA,"Other ","Mean Squared Error",NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1307,"https://doi.org/10.3389%2Ffpubh.2024.1302688","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1303," https://doi.org/10.1038/s41598-019-47645-z 
+","Other ","Sampling-importance-resampling (SIR) approach","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1291,"https://doi.org/10.1002/mma.6156","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+1285,"https://doi.org/10.1371/journal.pone.0228712","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+1283,"https://doi.org/10.1371/journal.pone.0228469","Markov Chain Monte Carlo",NA,"Other ","Lin’s concordance correlation coefficients (CCC) ",NA,"Sample estimate (multiple parameter sets)",NA
+1281,"https://doi.org/10.1371/journal.pcbi.1007707","Maximum likelihood estimation",NA,"Other ","Area under the curve (AUC) scores from leave-one-out cross validation",NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1279,"https://doi.org/10.1371/journal.pcbi.1007377","Other ","Both Markov Chain Monte Carlo for Credible Intervals, and Maximum Likelihood Estimation","Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1277,"10.1186/s12879-020-4914-2","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1273,"https://doi.org/10.1016/S1473-3099(19)30633-4","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1259,"https://doi.org/10.1371/journal.pone.0209320","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1254,"https://doi.org/10.5588/ijtld.19.0472","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1244,"https://doi.org/10.1186/s40249-020-00696-1","Other ","particle Markov
+chain Monte Carlo (PMCMC","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1242,"https://doi.org/10.1371/journal.pone.0236112","Other ","multi-start algorithm","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1240,"https://doi.org/10.1140/epjp/s13360-020-00615-1","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1239,"10.1097/QAI.0000000000002535","Not reported",NA,"Not clear",NA," In stage 2 (epidemiological), the posterior ranges of these 442 parameter sets were
+sampled 79 million times, retaining those that produced model outcomes meeting all 25 fitting targets before 2015","Sample estimate (multiple parameter sets)",NA
+1237,"https://doi.org/10.1016/j.eclinm.2020.100453","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1233," https://doi.org/10.1371/journal.pmed.1003831","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+1232,"https://doi.org/10.1016/S2214-109X(20)30227-8","Other ","Sampling importance resampling","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1227,"https://doi.org/10.1093/pubmed/fdz178","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1222,"https://doi.org/10.1126/scitranslmed.aax4607","Other ","Approximate Bayesian Computation and Markov Chain Monte Carlo","Other ","Adaptive acceptance criterion (Acceptance was defined as modelled outputs within all calibration target ranges for that country)",NA,"Sample estimate (multiple parameter sets)",NA
+1216,"https://doi.org/10.1371/journal.pmed.1003377","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+1197,"https://doi.org/10.1371/journal.pone.0206755","Other ","Bayesian melding","Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1196,"https://doi.org/10.3934/mbe.2021361","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1186,"http://dx.doi.org/10.1016/S2214-109X(18)30022-6","Not reported",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1185,"https://doi.org/10.1016/j.jtbi.2020.110453","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1183," https://doi.org/10.1038/s41467-020-20731-x","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1182,"https://doi.org/10.1186/s12916-018-1047-1","Maximum likelihood estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1179,"https://doi.org/10.1097/QAD.0000000000002053","Approximate Bayesian Computation",NA,"Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1173,"https://doi.org/10.1371/journal.pone.0217315","Other ","Approximate Bayesian computation with sequential Monte Carlo sampling","Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1169,"https://doi.org/10.1097/EDE.0000000000001143","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1160,"https://doi.org/10.1038/s41598-023-36432-6","Other ","Incremental Mixture Importance Sampling","Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1159,"https://doi.org/10.1016/j.amc.2021.126005","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1155,"https://doi.org/10.1371/journal.pcbi.1008850","Other "," Incremental Mixture Importance Sampling","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1148,"https://doi.org/10.1038/s41467-021-21775-3 ","Markov Chain Monte Carlo",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1144,"https://doi.org/10.1038/s41467-021-21815-y","Other ","Sequential Monte Carlo method based on particle filtering known as
+MIF for Likelihood Maximization by Iterated Filtering","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1140,"https://doi.org/10.1371/journal.pone.0248846","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1134," https://doi.org/
+10.1371/journal.pcbi.1008830","Maximum likelihood estimation",NA,"Other ","Kolmogorov–Smirnov (KS) tests, Quantile–
+Quantile (Q–Q) plots",NA,"Point estimate (single parameter / parameter set)",NA
+1130,"https://doi.org/10.1038%2Fs41598-021-86869-w","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1099,"10.1111/tmi.13145","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+1097,"https://doi.org/10.1016/
+S2352-3018(21)00274-5","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1096,"https://doi.org/10.1186/s12936-021-03875-z","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+1078,"https://doi.org/10.1371/journal.pmed.1003466","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1072,"https://doi.org/10.1038/s41598-018-33570-0","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+1071,"http://doi.org/10.1177/0272989X17738753","Other ","Parametric g-formula ","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1069,"https://doi.org/10.1371/journal.pone.0196480","Other ","history matching with model emulation","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1067,"https://doi.org/10.1186/s12879-018-3383-3","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1061,"https://doi.org/10.1016/j.epidem.2019.100360","Approximate Bayesian Computation",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1047,"https://doi.org/10.1371/journal.pone.0294628","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1031,"https://doi.org/10.1186/s12916-020-01651-5","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1027,"https://doi.org/10.1371/journal.pcbi.1007561","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+1015,"https://doi.org/10.1016/S2352-3018(22)00100-X","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1014,"https://doi.org/10.1038/s41598-019-49109-w ","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1009," https://doi.org/10.1002/mma.4940","Other ","Diffusion approximation, minimum constrast estimation","Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1003,"10.1016/S1473-3099(17)30540-6","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+994,"https://doi.org/10.1371/journal.pone.0200126","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+987,"https://doi.org/10.1016/S2352-3018(21)00147-8","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+980,"doi:10.1016/S2352-3018(18)30097-3","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+976,"https://doi.org/10.1038/s41598-018-24249-7","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+972,"https://doi.org/10.1097%2FQAD.0000000000002290","Manual (hand-tuning)",NA,"Not clear",NA,"within ranges of the empirical data estimates","Point estimate (single parameter / parameter set)",NA
+958,"10.1016/S2352-3018(23)00204-7","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+956,"https://doi.org/10.1016/j.chaos.2022.112141","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+949,"https://doi.org/10.1371/journal.pone.0194220","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+948,"https://doi.org/10.1093/jac/dkad186","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+944,"https://doi.org/10.1097/QAI.0000000000002977","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+936,"10.1097/QAD.0000000000002419","Approximate Bayesian Computation",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+925,"https://doi.org/10.1371/journal.pone.0237433","Not reported",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+910,"https://doi.org/10.1371/journal.pone.0259023","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Not reported ",NA
+907,"https://doi.org/10.1016/S2352-3018(20)30033-3","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+904,"https://doi.org/10.1038/s41598-021-85487-w","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+894,"https://doi.org/10.1016/j.idm.2020.09.007","Other ","Latin Hypercube Sampling","Other ","model runs were classified as model fits if the HIV and HSV-2 prevalence in all three MSM/TGW subgroups were within the 95% confidence intervals (CIs) for the available IBBA data",NA,"Sample estimate (multiple parameter sets)",NA
+892,"https://doi.org/10.1016/S2352-3018(18)30176-0","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+890,"https://doi.org/10.1038/s41598-018-24268-4","Other ","Monte-Carlo filtering","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+889,"doi: 10.1016/S2352-3018(19)30373-X","Other ","Step-wise minimization algorithm","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+885,"https://doi.org/10.28919/cmbn/4535","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+883,"https://doi.org/10.1016/S2468-2667(18)30236-6","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+877,"https://doi.org/10.1371/journal.pone.0230568","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+871,"https://doi.org/10.1038/s41598-020-75182-7","Other ","using a calibration function based on the deviance statistic for Poisson distributions","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+868," https://doi.org/10.1002/jia2.26194","Approximate Bayesian Computation",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+867,"http://doi.org/10.1371/journal.pcbi.1009301","Other ","adaptive population Monte Carlo Approximate Bayesian Computation
+algorithm (APMC-ABC)","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+864,"https://doi.org/10.1136/bmjopen-2019-033852","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+863,"https://doi.org/10.1371/journal.pone.0204245","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+861,"https://doi.org/10.2807/1560-7917.ES.2019.24.14.1800203","Approximate Bayesian Computation",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+859,"https://doi.org/10.1038/s41598-021-85154-0","Other ","Bayesian B-splines","Not reported",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+855,"https://doi:10.3934/dcdsb.2021037","Markov Chain Monte Carlo",NA,"Other ","Geweke value",NA,"Sample estimate (multiple parameter sets)",NA
+854,"10.1016/S2352-3018(19)30436-9","Other ","parallel simultaneous perturbation 
+optimisation (PSPO)","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+852,"https://doi.org/10.1038/s41598-020-62694-5 ","Other ","Latin Hypercube Sampling","Not reported",NA,NA,"Not reported ",NA
+845,"https://doi.org/10.1097/qai.0000000000002497","Other ","Nelder–Mead algorithm (NM) + Incremental mixture importance sampling (IMIS)","Data likelihood ",NA,NA,"Other ","Point estimate for NM, Sample estimate for IMIS"
+842,"10.1371/journal.pone.0196613","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+831,"https://doi.org/10.1016/j.chaos.2022.112879","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+826,"https://doi.org/10.1371/journal.pone.0286254","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+825,"https://doi.org/10.1016/j.chaos.2022.113078","Not reported",NA,"Not clear",NA,"In this part, we discuss the convergence and error analysis regarding
+the numerical method developed in the previous section. In fact, we try
+to show that
+limℎ→0‖‖𝑌 (𝑛ℎ) − 𝑌𝑛‖‖ = 0,
+ 𝑛ℎ = 𝑡 fixed, (43)
+which means the solution of the approximate set of equations converges
+to that of the exact problem as the step-length ℎ goes to 0. ","Point estimate (single parameter / parameter set)",NA
+819,"https://doi.org/10.1371/journal.pone.0215965","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+805,"https://doi.org/10.1016%2FS2352-3018(18)30168-1","Other ","global optimisation solver (fmincon with multistart in MATLAB) by minimising the sum log-likelihood of the calibration points","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+798,"https://doi.org/10.1038/s41598-022-24459-0","Other ","Multiobjective genetic algorithm","Not reported",NA,NA,"Not reported ",NA
+797,"https://doi.org/10.1016/S2352-3018(21)00022-9","Other ","Latin hypercube sampling","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+789,"10.1097/OLQ.0000000000001366","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+788,"https://doi.org/10.1371/journal.pone.0217559","Other ","Nelder-Mead algorithm","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+781,"https://doi.org/10.1093/aje/kwz038","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+775," https://doi.org/10.1371/journal.pone.0274288","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+747,"https://doi.org/10.1002/jia2.25650","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+744,"https://doi.org/10.1016/S2352-3018(20)30315-5","Approximate Bayesian Computation",NA,"Not reported",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+742,"https://doi.org/10.1002/jia2.26063","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+733,"https://doi.org/10.1038/s41467-023-37314-1","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+723,"10.1016/j.apm.2022.02.014","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+721,"https://doi.org/10.1097/INF.0000000000002680","Other ","Incremental Mixture Importance Sampling","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+713,"https://doi.org/10.1002/jia2.25495","Other ","Log likelihood ","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+691,"https://doi.org/10.1136/bmjgh-2021-007136","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+680,"https://doi.org/10.1016/j.lana.2022.100416","Other ","Bayesian framework by assigning plausible ranges to model parameters based on available data","Not clear",NA,"selecting those combinations of parameters (model 'fits’) for which model outputs fell within all the pre-determined ranges estimated from the data","Sample estimate (multiple parameter sets)",NA
+679,"https://doi.org/10.1016/j.mbs.2018.09.014","Markov Chain Monte Carlo",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+663,"https://doi.org/10.1002/jia2.25203","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+660,"https://doi.org/10.1002/jia2.25427","Other ","Monte Carlo filtering","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+649,"http://doi.org/10.1097/QAI.0000000000002921","Other ","Approximate Bayesian Computation with Sequential Monte Carlo sampling (ABC-SMC) method","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+642,"doi:10.1097/QAD.0000000000001747","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+631,"https://doi.org/10.1186/s12879-021-06757-6","Other ","No-U-Turn Sampler (NUTS), a variant of Hamiltonian Monte Carlo ","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+613,"http://dx.doi.org/10.1098/rsif.2017.0849","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+610,"https://doi.org/10.1016/j.eclinm.2022.101347","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+603,"doi:10.1097/QAI.0000000000002781","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+600,"https://doi.org/10.1002/jia2.25282","Other ","Bayesian melding","Not reported",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+598,"https://doi.org/10.1007/s00285-023-01885-w","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+586,"https://doi.org/10.1002/jia2.25414","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+578,"https://doi.org/10.1016/j.lanwpc.2022.100462","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+574,"https://doi.org/10.1093/ofid/ofy092","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+564,"https://doi.org/10.3934/mbe.2023052","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+562,"https://www.aimspress.com/article/10.3934/mbe.2023919","Other ","Genetic algorithm","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+549,"https://doi.org/10.1016/j.epidem.2021.100461","Other ","Monte Carlo filtering","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+546,"https://doi.org/10.1016/j.epidem.2017.10.001","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+545,"https://doi.org/10.1016/j.vaccine.2019.02.073","Not reported",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+544,"https://doi.org/10.1097/QAD.0000000000003012 
+","Other ","Sampling importance resampling","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+535,"https://doi.org/10.1111/hiv.12660","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+529,"https://doi.org/10.1002/jia2.25126","Other ","Any runs producing HIV prevalence projections that agreed with early IBBA HIV prevalence data for FSW (1990 or 1995) and clients (1999) and recent HIV prevalence data for young MSM from 2014 to 2016 were selected as a model fit.","Other ","Any runs producing HIV prevalence projections that agreed with early IBBA HIV prevalence data for FSW (1990 or 1995) and clients (1999) and recent HIV prevalence data for young MSM from 2014 to 2016 were selected as a model fit.",NA,"Not reported ",NA
+526,"https://doi.org/10.1002/jia2.25620","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+508,"http://onlinelibrary.wiley.com/doi/10.1002/jia2.25102/full ","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+504," https://doi.org/10.1002/jia2.25493","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+500,"http://dx.doi.org/10.1098/rsif.2019.0497","Manual (hand-tuning)",NA,"Not clear",NA,"We find that taking β = 0.6 results in an equilibrium disease prevalence of 69% which closely matches the recorded 70% prevalence among the Carletonville FSWs","Point estimate (single parameter / parameter set)",NA
+499,"http://doi.org/10.3934/mbe.2020354","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+495,"http://doi.org/10.11948/20190252","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+488,"https://doi.org/10.1002/mma.8723","Markov Chain Monte Carlo",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+487,"https://doi.org/10.1186/s12879-022-07207-7","Other ","Aproximate Bayesian Computation Sequential Monte Carlo (ABC-SMC) algorithm ","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+483,"https://doi.org/10.2196/publichealth.9357","Manual (hand-tuning)",NA,"Not clear",NA,"we identified the value that resulted in an average equilibrium HIV prevalence (from 100 simulations for each value for 50 years each) closest to the target estimates.","Point estimate (single parameter / parameter set)",NA
+482,"https://doi.org/10.1002/jia2.25994","Other ","Broyden–Fletcher–Goldfarb–Shanno algorithm + Nelder–Mead algorithm","Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+479,"https://doi.org/10.1016/j.idm.2022.01.002","Least squares estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+477,"DOI:10.1097/QAD.0000000000003347","Other ","Approximate Bayesian Computation Sequential Monte Carlo (ABC SMC) method","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+476,"https://doi.org/10.3390/
+tropicalmed7080190","Markov Chain Monte Carlo",NA,"Other ","Geweke’s method",NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+462,"https://doi.org/10.1016/j.drugalcdep.2022.109396","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+461,"https://doi.org/10.1007/s40435-023-01344-w","Other ","Predictor-corrector method","Other ","Nelder-Mead algorithm",NA,"Point estimate (single parameter / parameter set)",NA
+450,"https://doi.org/10.1097/QAD.0000000000002199","Not reported",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+447,"http://doi.org/10.3934/dcdsb.2020070","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+440,"10.1186/s40249-023-01164-2","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+439,"https://doi.org/10.1016/j.
+lana.2022.100281","Other ","Monte Carlo filtering","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+436,"https://doi.org/10.1097/QAD.0000000000001697","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+421,"https://doi.org/10.1186/s12889-018-6304-x","Not reported",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Not reported ",NA
+419,"https://doi.org/10.1017/s0950268818000961","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+414,"https://doi.org/10.1186/s12879-018-3516-8","Other ","simple search procedure","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+408,"https://doi.org/10.1016/j.idm.2019.04.003","Markov Chain Monte Carlo",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Not reported ",NA
+391,"DOI:10.1097/QAI.0000000000002663","Other ","Bayesian framework","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+390,"http://doi.org/10.31489/2021M2/106-114","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+378,"https://doi.org/10.1016/j.epidem.2019.02.001","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+375,"https://doi.org/10.1002/jia2.25373","Other ","Monte Carlo filtering","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+374,"http://doi.org/10.3934/dcdss.2018008","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+373,"DOI:10.1097/QAD.0000000000003528","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+372,"https://doi.org/10.2147/HIV.S413876","Least squares estimation",NA,"Other ","Akaike Information Criterion, Mean Square Error, coefficient of determination, r
+2",NA,"Point estimate (single parameter / parameter set)",NA
+369," https://doi.org/10.1002/jia2.25246","Other ","Latin Hypercube Sampling","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+367,"https://doi.org/10.1017/S0950268820000850","Markov Chain Monte Carlo",NA,"Other ","Mean Absolute Percentage Error (MAPE), Root Mean Square Percentage Error (RMSPE)",NA,"Sample estimate (multiple parameter sets)",NA
+363,"https://doi.org/10.1097/qad.0000000000002050","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+361,"http://doi.org/10.3934/mbe.2021109","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+359,"http://doi.org/10.1177/0272989X19889356","Other ","Nelder-Mead","Other ","Weighted mean percentage deviation",NA,"Sample estimate (multiple parameter sets)",NA
+355,"https://doi.org/10.1097/qad.0000000000002386","Other ","Broyden-Fletcher-Goldfarb-Shanno algorithm","Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+354,"10.1016/j.heliyon.2023.e21948","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+351,"https://doi.org/10.1093/cid/ciaa857","Not reported",NA,"Other ","We then reject simulations that result in a mean TB incidence of >5.2 per 100,000/year (2017 incidence in CA, i.e., no change) or in a mean TB incidence of <2.723 per 100,000/year (which is the mean incidence that would be expected under a 5% annual decline in incidence). ",NA,"Sample estimate (multiple parameter sets)",NA
+346,"https://10.0.4.73/QAD.0000000000002437","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+342,"https://doi.org/doi:10.1016/j.epidem.2020.100423","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+329,"https://doi.org/10.1016/j.idm.2020.09.009","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+326,"doi:10.1097/QAI.0000000000002546","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+325,"doi:10.1097/QAI.0000000000003029","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+313,"http://doi.org/10.1097/QAI.0000000000003013","Approximate Bayesian Computation",NA,"Not reported",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+312,"https://doi.org/10.1214/23-AOAS1730","Other ","Incremental mixture importance sampling","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+311,"https://doi.org/10.1016/j.
+lanwpc.2022.100467
+
+","Other ","A deviance-based loss was calculated using the following formula:
+	 ","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+305,"https://doi.org/10.1016/j.epidem.2019.02.002","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+302,"https://doi.org/10.1093/pubmed/fdz116","Other ","Coordinate descent algorithm","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+301,"https://doi.org/10.1016/j.eclinm.2020.100483","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+293,"10.1093/aje/kwz147","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+292,"https://doi.org/10.1097/QAD.0000000000001959","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+287,"https://doi.org/10.1186/s41256-019-0107-1","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+284,"https://doi.org/10.1111/hiv.13063","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+281,"https://doi.org/10.1186/s12879-023-08113-2","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+278,"https://doi.org/10.1016/j.idm.2019.04.001","Other ","Monte Carlo filtering","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+277,"https://doi.org/10.1186/s12874-022-01756-w","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+274,"http://doi.org/10.1093/ofid/ofy008","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+270,"http://doi.org/10.1097/QAI.0000000000002340","Approximate Bayesian Computation",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+268,"https://doi.org/10.1093/infdis/jiaa130","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+265,"https://doi.org/10.1097/QAI.0000000000001783","Not reported",NA,"Not reported",NA,NA,"Not reported ",NA
+262,"https://doi.org/10.1097/QAD.0000000000002455","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+261,"https://doi.org/0.1007/s10461-016-1635-z","Other ","out-of-bounds penalty measures, target error measures, and the number of targets that were out of bounds.","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+251,"https://doi.org/10.1097/qai.0000000000002927","Other ","Incremental Mixture Importance Sampling (IMIS) ","Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+243,"https://doi.org/10.1007/s11538-021-00891-7","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+240,"https://doi.org/10.1016/j.jtbi.2017.10.020","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+236,"doi: 10.1097/QAI.0000000000002580","Not reported",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+232,"doi: 10.2807/1560-7917.ES.2019.24.7.1800398","Other ","Monte Carlo filtering","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+226,"https://doi.org/10.1016/j.chaos.2020.109967","Least squares estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+224,"https://doi.org/10.1097/QAD.0000000000002681","Other ","Approximate Bayesian Computation with Sequential Monte Carlo Sampling","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+215,"https://doi.org/10.3390/app12168359","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+211,"https://doi.org/10.1016/j.jfranklin.2022.04.005","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+206,"https://doi.org/10.1371/journal.pone.0258267","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+179,"https://doi.org/10.1111/nrm.12332","Markov Chain Monte Carlo",NA,"Data likelihood ",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+166,"https://doi.org/10.1093/aje/kwx244","Other ","a Bayesian framework with incremental mixture importance sampling","Not reported",NA,NA,"Distribution estimate (a distribution function which generates parameter values)",NA
+164,"https://doi.org/10.1186/s12879-022-07738-z","Maximum likelihood estimation",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+125,"https://doi.org/10.3390/math9212645","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+117,"https://doi.org/10.1093/ofid/ofy078","Other ","Negative log-likelihood-distributed error with the optimization and the L-BFGS-B methods","Data likelihood ",NA,NA,"Point estimate (single parameter / parameter set)",NA
+79,"https://doi.org/10.1016/j.ijid.2022.07.047","Other ","incremental mixture importance sampling","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+76,"DOI: 10.1093/infdis/jiaa296","Least squares estimation",NA,"Other ","The calibration was then assessed by hand for an acceptable fit to the more recent HSRC 2017 National HIV Survey and 2016 Demographic Health Survey (DHS) for South Africa",NA,"Point estimate (single parameter / parameter set)",NA
+72,"https://doi.org/10.3390%2Fijerph16091592","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+70,"https://doi.org/10.1093/ofid/ofab457","Other ","a multivariable regression of the modelled HIV prevalence against the prevalence of using professional injectors, heroin use, and frequent injecting across all cities was performed. Parameters sets for which the modelled regression coefficients lay within the 95% confidence intervals (95%CI) of those from the data regression were accepted, with all others rejected. Then, a second criterion was applied that the modelled regression R^2-value must lie within +/-25% of the data regression R^2-value.","Other ","Same as algorithm details.",NA,"Sample estimate (multiple parameter sets)",NA
+54,"https://doi.org/10.1016/j.jadohealth.2017.09.023","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+37,"https://doi.org/10.1093/cid/ciy173","Not reported",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+35,"https://doi.org/10.1002/hec.4211","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Not reported ",NA
+33,"http://doi.org/10.1097/QAI.0000000000002844","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+31,"10.1093/infdis/jiaa552","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+21,"https://doi.org/10.1093/cid/cix832","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Not reported ",NA
+20,"https://doi.org/10.1093/ofid/ofac274","Not reported",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+18,"10.1093/aje/kwy230","Approximate Bayesian Computation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+11,"https://doi.org/10.1093/cid/ciab1029","Markov Chain Monte Carlo",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+10,"https://doi.org/10.1089/cmb.2021.0323","Manual (hand-tuning)",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+4,"https://doi.org/doi: 10.3389/fpubh.2021.689575","Least squares estimation",NA,"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Point estimate (single parameter / parameter set)",NA
+665,". https:// doi.org/10.1371/journal.pone.0242595","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+665,". https:// doi.org/10.1371/journal.pone.0242595","Other ","Incremental Mixture Importance Sampling ","Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1802,"https://doi.org/10.1097/EDE.0000000000001418","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1802,"https://doi.org/10.1097/EDE.0000000000001418","Maximum likelihood estimation",NA,"Not reported",NA,NA,"Not reported ",NA
+1802,"https://doi.org/10.1097/EDE.0000000000001418","Not reported",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+383,"http://doi.org/10.1097/QAD.0000000000002826","Other ","acceptance-rejection method ","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+383,"http://doi.org/10.1097/QAD.0000000000002826","Other ","Nelder-Mead Simplex Method","Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2210,"https://doi.org/10.1164/rccm.201907-1289oc","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2210,"https://doi.org/10.1164/rccm.201907-1289oc","Maximum likelihood estimation",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+2210,"https://doi.org/10.1164/rccm.201907-1289oc","Not reported",NA,"Data likelihood ",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1247,"https://doi.org/10.1371/journal.pone.0199453","Not reported",NA,"Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA
+1247,"https://doi.org/10.1371/journal.pone.0199453","Maximum likelihood estimation",NA,"Not reported",NA,NA,"Point estimate (single parameter / parameter set)",NA
+1247,"https://doi.org/10.1371/journal.pone.0199453","Other ","Bayesian history matching","Not reported",NA,NA,"Sample estimate (multiple parameter sets)",NA

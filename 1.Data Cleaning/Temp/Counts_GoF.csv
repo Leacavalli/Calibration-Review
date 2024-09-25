@@ -1,0 +1,53 @@
+"Goodness.of.fit..GOF..measure.employed.within.calibration.algorithm","N","Category"
+"Not reported",178,"Pre-defined"
+"Ad-hoc distance function (as in Approximate Bayesian Computation or least squares)",109,"Pre-defined"
+"Data likelihood ",93,"Pre-defined"
+"Akaike information criterion (AIC)",2,"Other"
+"Chi-square test",2,"Other"
+"Geweke’s method",2,"Other"
+" R-square, mean absolute error (MAE), and mean absolute percentage error (MAPE)",1,"Other"
+" minimizing the error of the number of reported incident data to the model curve",1,"Other"
+"Ad-hoc distance function for GWO, Not reported for MCMC",1,"Other"
+"Adaptive acceptance criterion (Acceptance was defined as modelled outputs within all calibration target ranges for that country)",1,"Other"
+"Akaike Information Criterion, Mean Square Error, coefficient of determination, r
+2",1,"Other"
+"An AM algorithm adapts continuously to the target distribution.",1,"Other"
+"Any runs producing HIV prevalence projections that agreed with early IBBA HIV prevalence data for FSW (1990 or 1995) and clients (1999) and recent HIV prevalence data for young MSM from 2014 to 2016 were selected as a model fit.",1,"Other"
+"Area under the curve (AUC) scores from leave-one-out cross validation",1,"Other"
+"Bayes Factor",1,"Other"
+"Deviance information criterion",1,"Other"
+"Estimation of the Gelman–Rubin convergence diagnostic",1,"Other"
+"Hamiltonian Monte Carlo algorithm",1,"Other"
+"Kolmogorov–Smirnov (KS) tests, Quantile–
+Quantile (Q–Q) plots",1,"Other"
+"Lin’s concordance correlation coefficients (CCC) ",1,"Other"
+"Mean Absolute Percentage Error (MAPE), Root Mean Square Percentage Error (RMSPE)",1,"Other"
+"Mean Squared Error",1,"Other"
+"Nelder-Mead algorithm",1,"Other"
+"Parameters were adjusted until the prediction lines best overlapped with lines that reflected the historical surveillance data.",1,"Other"
+"R2 and p-values",1,"Other"
+"Same as algorithm details.",1,"Other"
+"The calibration was then assessed by hand for an acceptable fit to the more recent HSRC 2017 National HIV Survey and 2016 Demographic Health Survey (DHS) for South Africa",1,"Other"
+"The summary statistic used was the TB incidence from the model falling within the 95% CI for all four TB incidence measures from the data",1,"Other"
+"We then reject simulations that result in a mean TB incidence of >5.2 per 100,000/year (2017 incidence in CA, i.e., no change) or in a mean TB incidence of <2.723 per 100,000/year (which is the mean incidence that would be expected under a 5% annual decline in incidence). ",1,"Other"
+"Weighted mean percentage deviation",1,"Other"
+"mean absolute percentage error",1,"Other"
+"minimized the Euclidean distance",1,"Other"
+"model runs were classified as model fits if the HIV and HSV-2 prevalence in all three MSM/TGW subgroups were within the 95% confidence intervals (CIs) for the available IBBA data",1,"Other"
+"we determined if the model performs better than random using a permutation test and second, we compared the global spatial autocorrelation to the data among each resampled parameter set using Global Moran’s I.",1,"Other"
+" In stage 2 (epidemiological), the posterior ranges of these 442 parameter sets were
+sampled 79 million times, retaining those that produced model outcomes meeting all 25 fitting targets before 2015",1,"Not Clear"
+"In this part, we discuss the convergence and error analysis regarding
+the numerical method developed in the previous section. In fact, we try
+to show that
+limℎ→0‖‖𝑌 (𝑛ℎ) − 𝑌𝑛‖‖ = 0,
+ 𝑛ℎ = 𝑡 fixed, (43)
+which means the solution of the approximate set of equations converges
+to that of the exact problem as the step-length ℎ goes to 0. ",1,"Not Clear"
+"Once we had obtained 1000 parameter sets that produced output consistent with the calibration targets, we used
+those parameter sets with the mechanistic model to simulate the future (step 3) for each country",1,"Not Clear"
+"The sum of the GoF of the individual calibration targets",1,"Not Clear"
+"We find that taking β = 0.6 results in an equilibrium disease prevalence of 69% which closely matches the recorded 70% prevalence among the Carletonville FSWs",1,"Not Clear"
+"selecting those combinations of parameters (model 'fits’) for which model outputs fell within all the pre-determined ranges estimated from the data",1,"Not Clear"
+"we identified the value that resulted in an average equilibrium HIV prevalence (from 100 simulations for each value for 50 years each) closest to the target estimates.",1,"Not Clear"
+"within ranges of the empirical data estimates",1,"Not Clear"

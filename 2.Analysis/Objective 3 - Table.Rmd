@@ -14,9 +14,8 @@ rm( list = ls() )
 library(tidyverse)
 
 # Load data
-setwd("~/GitHub/Calibration-Review")
+setwd("~/GitHub/Calibration-Review/1.Data Cleaning")
 clean_data <- read.csv("Clean_data.csv")
-
 ```
 
 # A. Purpose
@@ -159,9 +158,9 @@ Objective3_df <- rbind(Objective3_df,
 # Write file 
 ```{r}
 library(xlsx)
-setwd("~/GitHub/Calibration-Review")
-write.xlsx(as.data.frame(Objective3_df), file="Data_extraction_sheet.xlsx",
-  sheetName = "Reporting", append=TRUE , row.names = F, col.names = T)
+setwd("~/GitHub/Calibration-Review/3.Results")
+write.xlsx(as.data.frame(Objective3_df), file="Table3.xlsx",
+  sheetName = "Table 3", append=TRUE , row.names = F, col.names = T)
 ```
 
 

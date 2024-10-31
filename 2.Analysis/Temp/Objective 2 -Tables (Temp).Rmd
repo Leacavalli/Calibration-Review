@@ -1,0 +1,46 @@
+---
+title: "Make Objective 2 Tables"
+output: html_document
+date: "2024-10-13"
+---
+
+```{r setup, include=FALSE}
+# Clean environment
+rm( list = ls() )
+
+# load necessary libraries
+library(tidyverse)
+
+# Load data
+setwd("~/GitHub/Calibration-Review/1.Data Cleaning")
+clean_data <- read.csv("Clean_data.csv")
+```
+
+# Objective 2 - 1a Table
+```{r}
+Obj2_1a_df <-
+clean_data |> 
+  separate_rows(Calibration.algorithm.Family, sep = "; ")|>
+  select(Covidence.ID, Full.title, Calibration.algorithm.Family, Model.type, Stochasticity.in.model)
+
+# Write file 
+library(xlsx)
+setwd("~/GitHub/Calibration-Review/3.Results/Tables")
+write.xlsx(as.data.frame(Obj2_1a_df), file="Objective2_Table1a.xlsx",
+  sheetName = "Table1a", append=TRUE , row.names = F, col.names = T)
+```
+
+# Objective 2 - 1b Table
+```{r}
+Obj2_1b_df <-clean_data  |> 
+  separate_rows(Calibration.algorithm.Family, sep = "; ")|> 
+  separate_rows(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply., sep = "; ")|>
+  select(Covidence.ID, Full.title, Calibration.algorithm.Family, Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.)
+
+# Write file 
+library(xlsx)
+setwd("~/GitHub/Calibration-Review/3.Results/Tables")
+write.xlsx(as.data.frame(Obj2_1b_df), file="Objective2_Table1b.xlsx",
+  sheetName = "Table1b", append=TRUE , row.names = F, col.names = T)
+```
+

@@ -132,8 +132,12 @@ mutate(Name.of.calibration.algorithm = ifelse(Name.of.calibration.algorithm== "O
     mutate(Stochasticity.in.model = ifelse(Stochasticity.in.model== "deterministic", "Deterministic model " , Stochasticity.in.model))|> 
     mutate(External.beliefs.or.evidence = ifelse(External.beliefs.or.evidence== "Prior knowledge is incorporated for at least one parameter to be calibrated; e.g., as a prior distribution over the parameter", "Prior knowledge is incorporated for at least one parameter to be calibrated; e.g., as a prior distribution over the parameter." , External.beliefs.or.evidence))|> 
     mutate(What.justification.was.provided.for.choice.of.parameters.to.calibrate. = ifelse(What.justification.was.provided.for.choice.of.parameters.to.calibrate.== "Not reported", "Not reported ", What.justification.was.provided.for.choice.of.parameters.to.calibrate.))|> 
-    mutate(Nature.of.calibration.results = ifelse(grepl("Point",Nature.of.calibration.results), "Point estimate (single parameter / parameter set)", Nature.of.calibration.results))
-  
+    mutate(Nature.of.calibration.results = ifelse(grepl("Point",Nature.of.calibration.results), "Point estimate (single parameter / parameter set)", Nature.of.calibration.results))|> 
+    mutate(Scientific.problem.being.solved = ifelse(Scientific.problem.being.solved =="Evaluate interventions, Assess impact of model assumptions", "Evaluate interventions; Assess impact of model assumptions", Scientific.problem.being.solved))|> 
+    mutate(Scientific.problem.being.solved = ifelse(Scientific.problem.being.solved == "Assess impact of model assumptions; Understand disease mechanisms (e.g., through inference on a parameter)", "Assess impact of model assumptions; Understand disease mechanisms (e.g., through inference on a parameter) ", Scientific.problem.being.solved))|> 
+    mutate(How.is.uncertainty.in.calibration.outputs.reported. = ifelse(How.is.uncertainty.in.calibration.outputs.reported. == "Graphical: As a plot; e.g., a line with shaded areas indicating uncertainty intervals ", "Graphical: As a plot. E.g., a line with shaded areas indicating uncertainty intervals ", How.is.uncertainty.in.calibration.outputs.reported.))|> 
+    mutate(How.is.uncertainty.in.calibration.outputs.reported. = ifelse(How.is.uncertainty.in.calibration.outputs.reported. == "Numerical: As uncertainty intervals around estimates or model outputs. e.g., 95% CI: 1.5 - 4.5.; Graphical: As a plot; e.g., a line with shaded areas indicating uncertainty intervals ", "Numerical: As uncertainty intervals around estimates or model outputs. e.g., 95% CI: 1.5 - 4.5.; Graphical: As a plot. E.g., a line with shaded areas indicating uncertainty intervals ", How.is.uncertainty.in.calibration.outputs.reported.))|> 
+    mutate(Model.type = ifelse(Model.type == "Other: Compartmental", "Compartmental", Model.type))
 ```
 
 
@@ -153,7 +157,11 @@ table(Calibration_data_V3$Model.type)
 table(Calibration_data_V3$Stochasticity.in.model)
 
 # A.1 Scientific problem being solved (what is the purpose of calibration?) 
-table(Calibration_data_V3$Scientific.problem.being.solved)
+Calibration_data_V3 |>
+  select(Scientific.problem.being.solved)|> 
+  separate_rows(Scientific.problem.being.solved, sep = "; ")|> 
+  group_by(Scientific.problem.being.solved) |>
+  summarise(Count=n())
 
 # B.1.1. Beliefs or evidence
 table(Calibration_data_V3$External.beliefs.or.evidence)
@@ -391,11 +399,13 @@ clean_data_V5 <- left_join((clean_data_V4 %>%
   mutate(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply. = str_replace(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.,"Time to event ", "Time to event")) |>
   mutate(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply. = str_replace(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.,"Other ", "Other")) |>
   mutate(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply. = str_replace(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.,"Demographic;", "Demographic (e.g., population size, sex and age distribution);"))|>
-  mutate(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply. = str_replace(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.,"Treatment and treatment outcomes;", "Treatment and treatment outcomes (e.g., mortality, recovery);"))
+  mutate(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply. = str_replace(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.,"Treatment and treatment outcomes;", "Treatment and treatment outcomes (e.g., mortality, recovery);"))|>
+  mutate(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply. = str_remove(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.,"Contact/exposure; "))
 
 ```
-# Clean "Calibration size"Column
+# Clean "Calibration size" Column
 ```{r}
+# Format "Calibration size" Column
 clean_data_V5.2 <- clean_data_V5 |> 
   mutate(What.is.the.size.of.the.calibration.output.= str_replace_all(What.is.the.size.of.the.calibration.output., ",", ""))|> 
   mutate(What.is.the.size.of.the.calibration.output.V2= as.numeric(str_replace_all(What.is.the.size.of.the.calibration.output., ",", "")))
@@ -405,14 +415,76 @@ clean_data_V5.2_clean <- clean_data_V5.2 |>
   filter(! (is.na(What.is.the.size.of.the.calibration.output.V2) & What.is.the.size.of.the.calibration.output. != "Not reported")) 
 
 # Subset and clean the miscoded rows
+Names_alg <- c("History matching with emulation (HME); Approximate Bayesian Computation Markov Chain Monte Carlo (ABC-MCMC)",
+               "Grey Wolf Optimizer (GWO); Markov Chain Monte Carlo",
+               "Other; Approximate Bayesian Computation (ABC)",
+               "Maximum likelihood estimation; Least squares estimation",
+"History matching with emulation (HME)",
+"Approximate Bayesian Computation Accept-Reject Random sampling (ABC-RS); Approximate Bayesian Computation Markov Chain Monte Carlo (ABC-MCMC)",
+"Grey Wolf Optimizer (GWO); Markov Chain Monte Carlo",
+"Manual (hand-tuning); Approximate Bayesian Computation Markov Chain Monte Carlo (ABC-MCMC)",
+"Maximum Likelihood Estimation; Markov Chain Monte Carlo",
+"Nelder-Mead algorithm; Incremental Mixture Importance Sampling (IMIS)",
+"Other ; Manual (hand-tuning)",
+"Broyden–Fletcher–Goldfarb–Shanno algorithm; Nelder–Mead algorithm; Sampling importance resampling (SIR)",
+"Other",
+"Incremental Mixture Importance Sampling (IMIS)")
+
+Other_names_alg <- c(NA,
+               NA,
+               NA,
+               NA,
+               NA,
+               NA,
+               NA,
+               NA,
+               NA,
+               NA,
+               "Filtering method",
+               NA,
+               "Bayesian framework",
+               NA)
+
+
+Nature_out <- c("Sample estimate (multiple parameter sets); Sample estimate (multiple parameter sets)",
+                "Point estimate (single parameter / parameter set); Sample estimate (multiple parameter sets)",
+                "Not reported ; Sample estimate (multiple parameter sets)", 
+                "Point estimate (single parameter / parameter set); Sample estimate (multiple parameter sets)",
+                "Sample estimate (multiple parameter sets)",
+                "Not reported ; Sample estimate (multiple parameter sets)", 
+                "Point estimate (single parameter / parameter set); Not reported ",
+                "Point estimate (single parameter / parameter set); Sample estimate (multiple parameter sets)",
+                "Point estimate (single parameter / parameter set); Sample estimate (multiple parameter sets)",
+                "Point estimate (single parameter / parameter set); Sample estimate (multiple parameter sets)",
+                "Sample estimate (multiple parameter sets); Not reported ",
+                "Point estimate (single parameter / parameter set); Point estimate (single parameter / parameter set); Sample estimate (multiple parameter sets)",
+                "Sample estimate (multiple parameter sets)",
+                "Sample estimate (multiple parameter sets)")
+
+out_size <- c("1000; 1000",
+               "1; Not reported", 
+               "Not reported; 1000", 
+              "1; Not reported",
+              "232-8857",
+               "Not reported; 1000", 
+              "1; Not reported", 
+              "1; 1000", 
+              "1; 100000",
+              "1; 300", 
+              "100; Not reported", 
+              "1; 1; 1000", 
+              "1000 (Benin)",
+              "690-2254 (country and model specific)")
+
 clean_data_V5.2_dirty <- clean_data_V5.2 |>
   filter((is.na(What.is.the.size.of.the.calibration.output.V2) & What.is.the.size.of.the.calibration.output. != "Not reported"))|>
-  mutate(What.is.the.size.of.the.calibration.output. = c("1; Not reported", "232-8857", "1; Not reported", "1; 300", "1000", "690-2254 (country and model specific)"))|>
-  mutate(Nature.of.calibration.results = c("Point estimate (single parameter / parameter set); Not reported ", "Sample estimate (multiple parameter sets)", "Point estimate (single parameter / parameter set); Not reported ", "Point estimate (single parameter / parameter set); Not reported ", "Sample estimate (multiple parameter sets)", "Sample estimate (multiple parameter sets)"))
+  mutate(What.is.the.size.of.the.calibration.output. = out_size)|>
+  mutate(Name.of.calibration.algorithm = Names_alg)|>
+  mutate(Nature.of.calibration.results = Nature_out)
+
 # Finalize the data
 clean_data_V5_final <- rbind(clean_data_V5.2_clean, clean_data_V5.2_dirty)|>
   select(-What.is.the.size.of.the.calibration.output.V2)
-
 ```
 
 # Clean "Other" algorithm names
@@ -430,7 +502,8 @@ clean_data_V6 <- clean_data_V5_final |>
 # Make vectors containing all versions of each algorithm's name
 ABC_SMC_names <- c("Approximate Bayesian Computation Sequential Monte Carlo scheme", 
                    "Approximate Bayesian computation with sequential Monte Carlo sampling", 
-                   "Approximate Bayesian Computation with Sequential Monte Carlo Sampling", 
+                   "Approximate Bayesian Computation with Sequential Monte Carlo Sampling",
+                   "Approximate Bayesian Computation Sequential Monte Carlo Sampling (ABC-SMC) ",
                    "Aproximate Bayesian Computation Sequential Monte Carlo (ABC-SMC) algorithm ", 
                    "Approximate Bayesian Computation Sequential Monte Carlo (ABC SMC) method", 
                    "Approximate Bayesian Computation with Sequential Monte Carlo sampling (ABC-SMC) method")
@@ -444,6 +517,7 @@ IMIS_names <- c("incremental mixture importance sampling",
                 " Incremental Mixture Importance Sampling", 
                    "incremental mixture importance sampling (IMIS)", 
                    "Incremental Mixture Importance Sampling (IMIS) ",
+                "Incremental mixture importance sampling (IMIS)",
                    "a Bayesian framework with incremental mixture importance sampling", 
                    "Incremental Mixture Importance Sampling", "Incremental Mixture Importance Sampling ")
 MCF_names <- c("Monte-Carlo filtering", 
@@ -472,7 +546,7 @@ clean_data_V7 <- clean_data_V6 |>
   mutate(Other_Name.of.calibration.algorithm_V2= ifelse(Other_Name.of.calibration.algorithm %in% ABC_SMC_names, "Approximate Bayesian Computation Sequential Monte Carlo (ABC-SMC)", 
                                                         ifelse(Other_Name.of.calibration.algorithm %in% HME_names, "History matching with emulation (HME)",
                                                                ifelse(Other_Name.of.calibration.algorithm %in% IMIS_names, "Incremental Mixture Importance Sampling (IMIS)", 
-                                                                      ifelse(Other_Name.of.calibration.algorithm %in% MCF_names, "Monte-Carlo filtering", 
+                                                                      ifelse(Other_Name.of.calibration.algorithm %in% MCF_names, "Sequential Monte Carlo (SMC)", 
                                                                              ifelse(Other_Name.of.calibration.algorithm %in% SIR_names, "Sampling importance resampling (SIR)", 
                                                                                     ifelse(Other_Name.of.calibration.algorithm %in% SMC_PF_names, "Sequential Monte Carlo (SMC)", 
                                                                                            ifelse(Other_Name.of.calibration.algorithm %in% BM_names, "Bayesian melding", 
@@ -509,15 +583,18 @@ Recode <- clean_data_V9 |>
 Recoded <-left_join(Recode, Other_Name.of.calibration.algorithm_df)|>
   mutate(Name.of.calibration.algorithm= ifelse(Name.of.calibration.algorithm=="Other", "Other ", Name.of.calibration.algorithm))
 clean_data_V10 <- rbind(clean_data_V9 |> filter(! Covidence.ID %in% Other_Name.of.calibration.algorithm_df$Covidence.ID) , 
- Recoded)
+ Recoded)|>
+  mutate(Name.of.calibration.algorithm = ifelse(Name.of.calibration.algorithm =="History matching with emulation; Approximate Bayesian Computation (ABC)", "History matching with emulation (HME); Approximate Bayesian Computation (ABC)", Name.of.calibration.algorithm))
 
 # Add a "Algorithm Family" column
 ABC_family <- c("Adaptive population Monte Carlo Approximate Bayesian Computation (APMC-ABC)",
 "Approximate Bayesian Computation Accept-Reject Random sampling (ABC-RS); Approximate Bayesian Computation (ABC)",
-"Approximate Bayesian Computation Sequential Monte Carlo (ABC-SMC)")
+"Approximate Bayesian Computation Sequential Monte Carlo (ABC-SMC)", 
+"Approximate Bayesian Computation Markov Chain Monte Carlo (ABC-MCMC)")
 clean_data_V11 <- clean_data_V10 |> 
   mutate(Calibration.algorithm.Family = Name.of.calibration.algorithm) |>
-  mutate(Calibration.algorithm.Family = ifelse(Calibration.algorithm.Family %in% ABC_family, "Approximate Bayesian Computation (ABC)", Calibration.algorithm.Family))
+  mutate(Calibration.algorithm.Family = ifelse(Calibration.algorithm.Family %in% ABC_family, "Approximate Bayesian Computation (ABC)", Calibration.algorithm.Family))|>
+  mutate(Calibration.algorithm.Family = ifelse(Calibration.algorithm.Family == "History matching with emulation (HME); Approximate Bayesian Computation Markov Chain Monte Carlo (ABC-MCMC)", "History matching with emulation (HME); Approximate Bayesian Computation (ABC)", Calibration.algorithm.Family))
   
 ```
 
@@ -526,9 +603,10 @@ clean_data_V11 <- clean_data_V10 |>
 setwd("~/GitHub/Calibration-Review/1.Data Cleaning")
 write.csv(clean_data_V11, "Clean_data.csv", row.names = F)
 library(xlsx)
-setwd("~/GitHub/Calibration-Review/3.Results")
-write.xlsx(as.data.frame(clean_data_V11), file="Table1.xlsx",
+setwd("~/GitHub/Calibration-Review/3.Results/Tables")
+write.xlsx(as.data.frame(clean_data_V11), file="Sheet S1.xlsx",
   sheetName = "Table 1", append=TRUE , row.names = F, col.names = T)
+
 ```
 
 

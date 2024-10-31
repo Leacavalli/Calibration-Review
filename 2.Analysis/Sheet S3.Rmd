@@ -81,7 +81,7 @@ score_C.2 <- clean_data |>
 
 # C.3. Is calibration implementation (code) available in an open-access repository? 
 score_C.3 <- clean_data |> 
-  mutate(Is.calibration.implementation..code..available.in.an.open.access.repository. = ifelse(Is.calibration.implementation..code..available.in.an.open.access.repository.=="Link reported and accessible", 0, 1))|> 
+  mutate(Is.calibration.implementation..code..available.in.an.open.access.repository. = ifelse(Is.calibration.implementation..code..available.in.an.open.access.repository.=="Link reported and accessible", 1, 0))|> 
   select(Is.calibration.implementation..code..available.in.an.open.access.repository.) 
 
 # C.4. Goodness-of-fit (GOF) measure employed within calibration algorithm
@@ -94,7 +94,12 @@ score_C.4 <- clean_data |>
 # D. Output 
 ```{r}
 # D.1. Nature of calibration results
+composite <- clean_data |> 
+  filter(grepl(";", Nature.of.calibration.results))|> 
+  select(Covidence.ID, Nature.of.calibration.results,What.is.the.size.of.the.calibration.output.)
+composite$Nature <- paste0(sapply(strsplit(composite$Nature.of.calibration.results, "; "), function(x) trimws(tail(x, 1))), " ")
 score_D.1 <- clean_data |> 
+  mutate(Nature.of.calibration.results= ifelse(Covidence.ID %in% composite$Covidence.ID, composite$Nature, Nature.of.calibration.results))|> 
   mutate(Nature.of.calibration.results = ifelse(Nature.of.calibration.results=="Not reported ", 0, 1))|> 
   select(Nature.of.calibration.results) 
 
@@ -109,7 +114,9 @@ score_D.3 <- clean_data |>
   select(How.is.uncertainty.in.calibration.outputs.reported.) 
 
 # D.4. What is the size of the calibration output? 
+composite$size <- sapply(strsplit(composite$What.is.the.size.of.the.calibration.output., "; "), function(x) trimws(tail(x, 1)))
 score_D.4 <- clean_data |> 
+    mutate(What.is.the.size.of.the.calibration.output.= ifelse(Covidence.ID %in% composite$Covidence.ID, composite$size, What.is.the.size.of.the.calibration.output.))|> 
   mutate(What.is.the.size.of.the.calibration.output. = ifelse(What.is.the.size.of.the.calibration.output.=="Not reported", 0, 1)) |> 
   select(What.is.the.size.of.the.calibration.output.) 
 ```
@@ -132,9 +139,10 @@ Objective3_df
 # Add reporting comprehensiveness by article
 ```{r}
 Objective3_df <- Objective3_df |> 
-  mutate(Sum_Reporting_Score = rowSums(Objective3_df[,-(1:3)])) |> 
-  mutate(Reporting_comprehensiveness = ifelse(Sum_Reporting_Score> 10, "High", 
-                                                ifelse(Sum_Reporting_Score> 5, "Fair", "Low")))
+  mutate(Sum_Reporting_Score = rowSums(Objective3_df[,-(1:2)])) |> 
+  mutate(Reporting_comprehensiveness = ifelse(Sum_Reporting_Score > 14, "Excellent",
+                                              ifelse(Sum_Reporting_Score> 10, "High", 
+                                                ifelse(Sum_Reporting_Score> 5, "Fair", "Low"))))
 
 Objective3_df
 table(Objective3_df$Reporting_comprehensiveness)
@@ -158,8 +166,8 @@ Objective3_df <- rbind(Objective3_df,
 # Write file 
 ```{r}
 library(xlsx)
-setwd("~/GitHub/Calibration-Review/3.Results")
-write.xlsx(as.data.frame(Objective3_df), file="Table3.xlsx",
+setwd("~/GitHub/Calibration-Review/3.Results/Tables")
+write.xlsx(as.data.frame(Objective3_df), file="Sheet S3.xlsx",
   sheetName = "Table 3", append=TRUE , row.names = F, col.names = T)
 ```
 

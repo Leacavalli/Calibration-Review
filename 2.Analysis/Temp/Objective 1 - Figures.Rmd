@@ -1,0 +1,221 @@
+---
+title: "Objective 1 - Figures"
+output: html_document
+date: "2024-06-25"
+---
+
+# Set up environment
+```{r}
+# Clean environment
+rm( list = ls() )
+
+# load necessary libraries
+library(tidyverse)
+library(dplyr)
+library(khroma)
+library(colorBlindness)
+
+# Load data
+setwd("~/GitHub/Calibration-Review/1.Data Cleaning")
+clean_data <- read.csv("Clean_data.csv")
+```
+
+
+# Keep ?
+# Figure 2A and B: Association between disease and algorithm AIM
+```{r}
+# chordDiagram
+# install.packages("circlize")
+# library(circlize)
+# clean_data |> 
+#   separate_rows(Disease.type..choose.all.that.apply., sep = "; ")|> 
+#   select(Aim.of.calibration.procedure,  Disease.type..choose.all.that.apply.)|>
+#   chordDiagram(grid.col = carto.pal(pal1 = "pastel.pal" ,n1 = 6))
+
+# Barplot - Proportion stacked
+clean_data|> 
+  separate_rows(Disease.type..choose.all.that.apply., sep = "; ")|>
+  group_by(Aim.of.calibration.procedure, Disease.type..choose.all.that.apply.) |>
+  summarise(Count = n(), .groups = 'drop') |>
+  group_by(Disease.type..choose.all.that.apply.) |>
+  mutate(Proportion = Count / sum(Count)) |>
+  ggplot(aes(x=Disease.type..choose.all.that.apply., y = Proportion, fill = Aim.of.calibration.procedure)) +
+  geom_bar(stat = "identity", position = "fill") +
+  theme_classic() +
+  xlab("Aim of calibration algorithm") +
+  ylab("Proportion") +
+  labs(fill = "Aim of calibration algorithm") +
+  scale_fill_manual(values = carto.pal(pal1 = "pastel.pal" ,n1 = 5))
+
+```
+# 1ci.
+# Figure 2C: Calibration algorithm family by disease
+```{r}
+# Barplot - count
+alg_Fam_sorted <- sort(unique(clean_data |> 
+              separate_rows(Calibration.algorithm.Family, sep = "; ")|>
+              filter(Calibration.algorithm.Family != "Not reported")|>
+              pull(Calibration.algorithm.Family)))
+
+clean_data |> 
+    separate_rows(Calibration.algorithm.Family, sep = "; ")|> 
+    separate_rows(Disease.type..choose.all.that.apply., sep = "; ")|>
+  filter(! Calibration.algorithm.Family %in% c("Other "))|>
+  mutate(Calibration.algorithm.Family = factor(Calibration.algorithm.Family, levels= c("Not reported", alg_Fam_sorted))) |> 
+  ggplot(aes(x=Calibration.algorithm.Family, fill = Aim.of.calibration.procedure))+
+  geom_bar() +
+     facet_grid(Disease.type..choose.all.that.apply.~.)+
+     theme_classic() +
+     xlab("Calibration algorithm family") +
+     ylab("Count") +
+     labs(fill = "Aim of calibration algorithm") +
+     theme(axis.text.x = element_text(angle = 60, hjust = 1))+
+  scale_fill_manual(values = c(color("high contrast")(2), "grey"))
+```
+# 1c - subset Calibration algorithm family (with at least 10 articles) 
+```{r}
+keep <- (clean_data |> 
+  separate_rows(Calibration.algorithm.Family, sep = "; ")|>
+  filter(! Calibration.algorithm.Family %in% c("Other ", "Not reported"))|>
+  group_by(Calibration.algorithm.Family)|>
+  summarise(N=n())|>
+  filter(N>=10)|>
+  pull(Calibration.algorithm.Family))
+```
+
+# 1cii. Calibration algorithm family by programming language 
+```{r}
+clean_data |> 
+  separate_rows(Calibration.algorithm.Family, sep = "; ")|>
+  filter(Calibration.algorithm.Family %in% keep)|>
+  separate_rows(What.programming.language.was.used.for.calibration., sep = "; ")|>
+    mutate(Calibration.algorithm.Family = factor(Calibration.algorithm.Family, levels= sort(unique(Calibration.algorithm.Family))))|>
+    mutate(What.programming.language.was.used.for.calibration. = factor(What.programming.language.was.used.for.calibration., levels= c("R", "C++", "Matlab", "Python", "Julia", "Other ", "Not reported"))) |> 
+  group_by(Calibration.algorithm.Family, What.programming.language.was.used.for.calibration.) |>
+  summarise(Count = n(), .groups = 'drop') |>
+  group_by(Calibration.algorithm.Family) |>
+  mutate(Proportion = Count / sum(Count)) |>
+  ggplot(aes(x=Calibration.algorithm.Family, y = Proportion, fill = What.programming.language.was.used.for.calibration.)) +
+  geom_bar(stat = "identity", position = "fill") +
+  theme_classic() +
+  xlab("Calibration algorithm family") +
+  ylab("Proportion") +
+  labs(fill = "Programming Language")+
+  scale_fill_manual(values = c(color("light")(6), "grey"))+
+     theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+```
+# 1ciii. Calibration algorithm family (with at least 10 articles) by model type 
+```{r}
+clean_data |> 
+  separate_rows(Calibration.algorithm.Family, sep = "; ")|>
+  filter(Calibration.algorithm.Family %in% keep)|>
+    mutate(Calibration.algorithm.Family = factor(Calibration.algorithm.Family, levels= sort(unique(Calibration.algorithm.Family)))) |>
+    mutate(Model.type = factor(Model.type, levels= c("Compartmental", "Individual-based", "Hawkes Process", "Other", "Not reported")))|> 
+  group_by(Calibration.algorithm.Family, Model.type) |>
+  summarise(Count = n(), .groups = 'drop') |>
+  group_by(Calibration.algorithm.Family) |>
+  mutate(Proportion = Count / sum(Count)) |>
+  ggplot(aes(x=Calibration.algorithm.Family, y = Proportion, fill = Model.type)) +
+  geom_bar(stat = "identity", position = "fill") +
+  theme_classic() +
+  xlab("Calibration algorithm family") +
+  ylab("Proportion") +
+  labs(fill = "Model Type")+
+  scale_fill_manual(values = c(rev(color("medium contrast")(4)), "grey"))+
+     theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+```
+# 1civ. Calibration algorithm family (with at least 10 articles) by iv) by model stochasticity
+```{r}
+clean_data |> 
+  separate_rows(Calibration.algorithm.Family, sep = "; ")|>
+  filter(Calibration.algorithm.Family %in% keep)|>
+    mutate(Calibration.algorithm.Family = factor(Calibration.algorithm.Family, levels= sort(unique(Calibration.algorithm.Family))))|>
+    mutate(Stochasticity.in.model = factor(Stochasticity.in.model, levels= c("Deterministic model ", "Stochastic model", "Not reported"))) |> 
+  group_by(Calibration.algorithm.Family, Stochasticity.in.model) |>
+  summarise(Count = n(), .groups = 'drop') |>
+  group_by(Calibration.algorithm.Family) |>
+  mutate(Proportion = Count / sum(Count)) |>
+  ggplot(aes(x=Calibration.algorithm.Family, y = Proportion, fill = Stochasticity.in.model)) +
+  geom_bar(stat = "identity", position = "fill") +
+  theme_classic() +
+  xlab("Calibration algorithm family") +
+  ylab("Proportion") +
+  labs(fill = "Model Stochasticity")+
+  scale_fill_manual(values = c(color("vibrant")(2), "grey"))+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+```
+
+# 1d.
+# Figure X. Frequency of Type of data used for defining calibration target  
+```{r}
+set.seed(1234)
+col_1d <- sample(color("discrete rainbow")(15))
+  
+
+setwd("~/GitHub/Calibration-Review/3.Results/Figures")
+
+ggsave("Figure_S1.tiff", units="in", width=8, height=4, dpi=300, compression = 'lzw')
+
+clean_data |> 
+  separate_rows(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply., sep = "; ")|> 
+  mutate(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply. = ifelse(grepl("Contact/exposure", Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.), "Contact/exposure", 
+                                                                                             ifelse(grepl("Treatment and treatment outcomes", Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.), "Treatment and outcomes", 
+                                                                                                    ifelse(grepl("Demographic", Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.), "Demographic", 
+                                                                                                           ifelse(grepl("Climate", Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.), "Climate", Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.)))))|>
+  mutate( Type.of.data.used.for.defining.calibration.targets..select.all.that.apply. = fct_infreq(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.),  
+          Type.of.data.used.for.defining.calibration.targets..select.all.that.apply. = fct_relevel(Type.of.data.used.for.defining.calibration.targets..select.all.that.apply., after = Inf)) |>
+  ggplot(aes(x=Type.of.data.used.for.defining.calibration.targets..select.all.that.apply., fill = Type.of.data.used.for.defining.calibration.targets..select.all.that.apply.))+
+  geom_bar() +
+  theme_classic() +
+  xlab("Type of data") +
+  ylab("Number of Models") +
+  theme(legend.position = "none")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  scale_fill_manual(values = col_1d)
+
+dev.off()
+
+```
+# 1e.
+# Figure 1: Calibration size Distribution
+```{r}
+# Prepare data 
+# Categorise algorithm output size
+Calibration_size_df <- clean_data |>
+  separate_rows(What.is.the.size.of.the.calibration.output., Name.of.calibration.algorithm, sep = "; ")|> 
+  mutate(size.of.the.calibration.output.reported = ifelse(What.is.the.size.of.the.calibration.output. == "Not reported", "Not reported", "[Number provided]"))|>
+  filter(size.of.the.calibration.output.reported != "Not reported") |> 
+  mutate(What.is.the.size.of.the.calibration.output.V2= as.numeric(What.is.the.size.of.the.calibration.output.))|> 
+  filter( ! is.na(What.is.the.size.of.the.calibration.output.V2))|>
+  mutate(size.of.the.calibration.output.CAT = ifelse(What.is.the.size.of.the.calibration.output.V2 ==1, "1", 
+                                                      ifelse(What.is.the.size.of.the.calibration.output.V2 <=1000, "2-1000", 
+                                                             ifelse(What.is.the.size.of.the.calibration.output.V2 <=2000, "1001-2000", 
+                                                                    ifelse(What.is.the.size.of.the.calibration.output.V2 <=3000, "2001-3000", 
+                                                                           ifelse(What.is.the.size.of.the.calibration.output.V2 <=4000, "4001-5000", ">5000"))))))|>
+  mutate(size.of.the.calibration.output.CAT = factor(size.of.the.calibration.output.CAT, levels=c("1","2-1000","1001-2000","2001-3000","4001-5000", ">5000")))
+
+
+## STACKED BAR PLOT
+## Counts
+ggsave("Figure_S5.tiff", units="in", width=8, height=4, dpi=300, compression = 'lzw')
+
+Calibration_size_df|> 
+  separate_rows(Calibration.algorithm.Family, sep = "; ")|>
+  filter(Calibration.algorithm.Family %in% keep)|>
+  group_by(Calibration.algorithm.Family, size.of.the.calibration.output.CAT) |>
+  summarise(Count = n(), .groups = 'drop') |>
+  filter(size.of.the.calibration.output.CAT != "1")|>
+  ggplot(aes(x=size.of.the.calibration.output.CAT, y = Count, fill = Calibration.algorithm.Family)) +
+  geom_bar(stat = "identity") +
+  theme_classic() +
+  xlab("Size of Calibration Output") +
+  ylab("Number of Models") +
+  labs(fill ="Calibration Method" ) +
+  scale_fill_manual(values = color("muted")(7))
+
+dev.off()
+
+```

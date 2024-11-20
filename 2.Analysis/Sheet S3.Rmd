@@ -146,6 +146,8 @@ Objective3_df <- Objective3_df |>
 
 Objective3_df
 table(Objective3_df$Reporting_comprehensiveness)
+round(100*prop.table(table(Objective3_df |> filter(Reporting_comprehensiveness %in% c("Excellent", "High","Fair", "Low")) |> pull(Reporting_comprehensiveness))), 1)
+
 ```
 
 # Summarise reporting score by Category

@@ -24,9 +24,12 @@ colnames(Multiple_Calibration_data) <- Multiple_Calibration_data[2,]
 Multiple_Calibration_data  <- Multiple_Calibration_data[-c(1:2),]
 
 # Remove multiple calibration paper from covidence raw data 
+# Remove duplicates
 Covidence_raw_data_1cal <- Covidence_raw_data |>
-  filter(!(Covidence.. %in% Multiple_Calibration_data$`Covidence ID`)) 
+  filter(!(Covidence.. %in% Multiple_Calibration_data$`Covidence ID`))|>
+  filter(! Covidence.. %in% c(2507, 2756, 1782 ,2742)) 
 ```
+
 
 # Clean Column names
 ```{r}
@@ -510,7 +513,8 @@ ABC_SMC_names <- c("Approximate Bayesian Computation Sequential Monte Carlo sche
 HME_names <- c("History matching with emulation", 
                "history matching with model emulation", 
                "history matching with emulation", 
-               " history matching with emulation")
+               " history matching with emulation", 
+               "Bayesian history matching")
 IMIS_names <- c("incremental mixture importance sampling", 
                    "Incremental mixture importance sampling", 
                    "Incremental Mixture Importance Sampling", 
@@ -606,7 +610,6 @@ library(xlsx)
 setwd("~/GitHub/Calibration-Review/3.Results/Tables")
 write.xlsx(as.data.frame(clean_data_V11), file="Sheet S1.xlsx",
   sheetName = "Table 1", append=TRUE , row.names = F, col.names = T)
-
 ```
 
 

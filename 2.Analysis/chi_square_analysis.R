@@ -1,7 +1,7 @@
 #### Load relevant packages #####
 
 library(readxl) # Reading Excel graphs 
-library(ggstatsplot) # Plotting results 
+# library(ggstatsplot) # Plotting results 
 library(ggpubr) # Combining plots
 
 #### Load data and format #####
@@ -104,7 +104,7 @@ tb12 <- tb1[tb1$Calibration.algorithm.Family%in%
               c("Approximate Bayesian Computation (ABC)",
                 "Markov Chain Monte Carlo",
                 "Least squares estimation",
-                "Maximum likelihood estimation") & tb1$Stochasticity.in.model %in% c("Deterministic model", "Stochastic model"), ]
+                "Maximum likelihood estimation") & tb1$Stochasticity.in.model %in% c("Deterministic model ", "Stochastic model"), ]
 tb12
 
 # Run Fisher's test 

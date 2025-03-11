@@ -1,14 +1,13 @@
-#### Load relevant packages #####
 
-library(readxl) # Reading Excel graphs 
-# library(ggstatsplot) # Plotting results 
-library(ggpubr) # Combining plots
 
 #### Load data and format #####
 # Clean environment
 rm( list = ls() )
+
 # load necessary libraries
 library(tidyverse)
+library(ggstatsplot) # Plotting results 
+
 # Load data
 setwd("~/GitHub/Calibration-Review/1.Data Cleaning")
 clean_data <- read.csv("Clean_data.csv")
@@ -62,6 +61,27 @@ table(tb11$Calibration.algorithm.Family, tb11$Model.type)
 dat1 <- table(tb11$Calibration.algorithm.Family, tb11$Model.type)
 test1 <- fisher.test(dat1)
 test1$data.name
+
+# Post hoc logistic regression
+tb11$Calibration.algorithm.Family_ABC <- ifelse(tb11$Calibration.algorithm.Family == "Approximate Bayesian Computation (ABC)", 1, 0)
+mod_structure_ABC <- glm(Calibration.algorithm.Family_ABC ~ Model.type, data=tb11, family ="binomial")
+summary(mod_structure_ABC)
+round(confint(mod_structure_ABC), 2)
+
+tb11$Calibration.algorithm.Family_LSE <- ifelse(tb11$Calibration.algorithm.Family == "Least squares estimation", 1, 0)
+mod_structure_LSE <- glm(Calibration.algorithm.Family_LSE ~ Model.type, data=tb11, family ="binomial")
+summary(mod_structure_LSE)
+round(confint(mod_structure_LSE), 2)
+
+tb11$Calibration.algorithm.Family_MCMC <- ifelse(tb11$Calibration.algorithm.Family == "Markov Chain Monte Carlo", 1, 0)
+mod_structure_MCMC <- glm(Calibration.algorithm.Family_MCMC ~ Model.type, data=tb11, family ="binomial")
+summary(mod_structure_MCMC)
+round(confint(mod_structure_MCMC), 2)
+
+tb11$Calibration.algorithm.Family_MLE <- ifelse(tb11$Calibration.algorithm.Family == "Maximum likelihood estimation", 1, 0)
+mod_structure_MLE <- glm(Calibration.algorithm.Family_MLE ~ Model.type, data=tb11, family ="binomial")
+summary(mod_structure_MLE)
+round(confint(mod_structure_MLE), 2)
 
 
 # Fisher's exact test plot

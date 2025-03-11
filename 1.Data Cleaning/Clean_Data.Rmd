@@ -26,8 +26,7 @@ Multiple_Calibration_data  <- Multiple_Calibration_data[-c(1:2),]
 # Remove multiple calibration paper from covidence raw data 
 # Remove duplicates
 Covidence_raw_data_1cal <- Covidence_raw_data |>
-  filter(!(Covidence.. %in% Multiple_Calibration_data$`Covidence ID`))|>
-  filter(! Covidence.. %in% c(2507, 2756, 1782 ,2742)) 
+  filter(!(Covidence.. %in% Multiple_Calibration_data$`Covidence ID`))
 ```
 
 
